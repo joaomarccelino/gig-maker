@@ -1,0 +1,48 @@
+:root {
+  --g1: #FFFFFF;
+  --g2: #F7F7F7;
+  --g3: #EDEDED;
+  --g4: #DEDEDE;
+  --g5: #CCCCCC;
+  --g6: #B2B2B2;
+  --g7: #9C9C9C;
+  --g8: #717171;
+  --g9: #595959;
+  --g10: #404040;
+  --g11: #2e2e2e;
+  --g12: #111111;
+  --g13: #000000;
+  --p1: #1B9AAA;
+  --p2: #00E2FF;
+}
+
+body,
+h1,
+h2,
+h3,
+button,
+p,
+ul,
+li,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--g11);
+  box-sizing: border-box;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
