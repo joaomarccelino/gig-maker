@@ -1,0 +1,88 @@
+.sign-bg {
+  height: 100vh;
+  width: 100%; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  /* display: none; */
+  animation: show-modal-up .8s;
+  transition: ease 1s;
+}
+
+.sign-bg.active {
+  display: initial;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sign-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: var(--g13);
+  max-width: 560px;
+  height: 60%;
+  margin: 80px auto;
+  border-radius: 4px;
+  position: relative;
+}
+
+.signTitle {
+  font: 700 2rem/1.1 "Poppins", sans-serif;
+  color: var(--g1);
+}
+
+.sign-modal-btn {
+  display: flex;
+  align-items: center;
+  font: 700 1rem/1.1 "Poppins", sans-serif;
+  color: var(g-11);
+  border: none;
+  border: 3px solid var(--p2);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sign-modal p {
+  font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g1);
+  margin-right: 10px;
+}
+
+.sign-modal-btn span {
+  margin-right: 10px;
+}
+
+.text-btn {
+  border: none;
+  background: none;
+  color: var(--p2);
+  font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  cursor: pointer;
+}
+
+.close-button {
+  color: red;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes show-modal-up {
+  from {
+    top: -800px;
+    background: none;
+  }
+  to {
+    top: 0;    
+  }
+}

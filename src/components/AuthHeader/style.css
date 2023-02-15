@@ -1,0 +1,22 @@
+.auth-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.nav-menu a {
+  color: var(--g1);
+  font: 700 1rem/1.1 "Poppins", sans-serif;
+}
+
+.nav-menu a:hover {
+  opacity: 0.8;
+}
+
