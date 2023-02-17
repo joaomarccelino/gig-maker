@@ -1,0 +1,101 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic-area {
+  width: 360px;
+  height: 360px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  padding: 40px;
+  background-color: var(--g4);
+  border-radius: 40px;
+  border: 8px solid var(--g12);
+  margin-bottom: 20px;
+}
+
+.register-title {
+  margin-bottom: 120px;
+}
+
+.register-subtitle,
+.register-title {
+  color: var(--g1);
+  font: 700 2rem/1.1 "Poppins", sans-serif;
+}
+
+.register-subtitle {
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.profile-pic-btns {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.profile-pic-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-pic-btn p {
+  font: 700 1rem/1.1 "Poppins", sans-serif;
+}
+
+.register-form {
+  width: 600px;
+}
+
+.register-form input,
+.register-form label,
+.register-form textarea,
+.register-form select {
+  display: block;
+}
+
+.register-form label {
+ font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g6);
+  margin-bottom: 8px;
+}
+
+.register-form input,
+.register-form textarea,
+.register-form select {
+  background-color: var(--g3);
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  border: none;
+  border: 1px solid var(--g5);
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.register-form input,
+.register-form select {
+  height: 36px;
+}
+
+.register-btn {
+  font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  text-transform: uppercase;
+  padding: 10px;
+  color: var(--g11);
+  background-color: var(--p2);
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.center-btn {
+  text-align: center;
+}

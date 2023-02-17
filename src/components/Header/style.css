@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: 80px;
+  background-color: var(--g12);
+  padding: 20px 40px;
+  border-radius: 4px;
+}
+
+.header input {
+  width: 50%;
+  height: 26px;
+  border-radius: 8px;
+  border: none;
+  padding: 4px 4px 4px 24px;
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+}
+
+.icons-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
