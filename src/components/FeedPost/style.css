@@ -1,0 +1,51 @@
+.feed-post {
+  background-color: var(--g2);
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 40px;
+  border-radius: 8px;
+  margin-bottom: 80px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-header h2 {
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g12);
+}
+
+.post-header span {
+  font: 700 0.75rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g8);
+}
+
+.post-photo {
+  border-radius: 8px;
+}
+
+.feed-post-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.post-text {
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g10);
+}
+
+.feed-post-input {
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g12);
+  background-color: var(--g4);
+  padding: 16px 40px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 12px;
+}

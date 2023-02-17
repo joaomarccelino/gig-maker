@@ -1,0 +1,9 @@
+.home {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+}
+
+.home-items {
+  display: flex;
+  flex-direction: column;
+}

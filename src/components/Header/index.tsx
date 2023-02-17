@@ -17,13 +17,13 @@ const Header = () => {
         />
         <div className="icons-nav-menu">
           <a href="/">
-            <BsFillPeopleFill color="var(--g5)" size={36}/>
+            <BsFillPeopleFill color="var(--g5)" size={30}/>
           </a>
           <a href="/">
-            <FaMusic color="var(--g5)" size={36}/>
+            <FaMusic color="var(--g5)" size={30}/>
           </a>
           <a href="/">
-            <IoNotifications color="var(--g5)" size={36}/>
+            <IoNotifications color="var(--g5)" size={30}/>
           </a>
         </div>
       </div>
