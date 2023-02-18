@@ -6,6 +6,7 @@ import Auth from './pages/Auth';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import UserProfile from './pages/UserProfile';
+import BandProfile from './pages/BandProfile';
 
 function App() {
   const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ function App() {
           <Route path="/registro/:id" element={<Register />}/>
           <Route path='/home' element={<Home />} />
           <Route path='/user/:id' element={<UserProfile />} />
+          <Route path='/band/:id' element={<BandProfile />} />
         </Routes>
       </QueryClientProvider>
     </>

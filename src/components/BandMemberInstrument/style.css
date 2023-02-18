@@ -1,0 +1,11 @@
+.band-member-instrument {
+  padding: 20px 10px;
+  background-color: var(--g11);
+  border-radius: 8px;
+}
+
+.band-member-instrument p {
+  font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  text-transform: uppercase;
+  color: var(--p2);
+}
