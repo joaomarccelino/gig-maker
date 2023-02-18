@@ -5,6 +5,7 @@ import { Routes } from 'react-router';
 import Auth from './pages/Auth';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   const queryClient = new QueryClient();
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Auth />}/>
           <Route path="/registro/:id" element={<Register />}/>
           <Route path='/home' element={<Home />} />
+          <Route path='/user/:id' element={<UserProfile />} />
         </Routes>
       </QueryClientProvider>
     </>

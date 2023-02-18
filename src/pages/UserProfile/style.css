@@ -1,0 +1,103 @@
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 80px;
+}
+
+.user-cover-photo {
+  background-size: cover;
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.8);
+  width: 100%;
+  height: 600px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-menu {
+  display: flex;
+  gap: 12px;
+}
+
+.user-prof-photo {
+  max-width: 440px;
+  border: 8px solid var(--g12);
+  border-radius: 40px;
+}
+
+.user-info h1 {
+  font: 700 2rem/1.1 "Poppins", sans-serif;
+  color: var(--g1);
+}
+
+.user-city {
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g4);
+  text-transform: uppercase;
+}
+
+.user-instruments-refs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.user-instruments,
+.user-references {
+  background-color: var(--g12);
+  border-radius: 8px;
+  margin-bottom: 80px;
+  padding: 40px;
+}
+
+.user-instruments h2,
+.user-references h2 {
+  font: 700 2rem/1.1 "Poppins", sans-serif;
+  text-transform: uppercase;
+  color: var(--g2);
+  margin-bottom: 20px;
+}
+
+.instruments-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.user-btn-area {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.user-btn {
+  background-color: var(--g10);
+  border: none;
+  padding: 10px;
+  width: 160px;
+  border-radius: 8px;
+  font: 700 1.25rem/1.1 "Poppins", sans-serif;
+  text-transform: uppercase;
+  color: var(--g2);
+  cursor: pointer;
+}
+
+.user-btn.active {
+  background-color: var(--p1);
+}

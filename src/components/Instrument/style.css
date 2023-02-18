@@ -1,0 +1,11 @@
+.instrument {
+  padding: 80px 20px;
+  background-color: var(--g11);
+  border-radius: 8px;
+}
+
+.instrument p {
+  font: 700 1.5rem/1.1 "Fira Sans", sans-serif;
+  text-transform: uppercase;
+  color: var(--p2);
+}
