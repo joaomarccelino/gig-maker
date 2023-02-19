@@ -85,3 +85,15 @@ a {
   border: none;
   cursor: pointer;
 }
+
+.unregister-btn {
+  font: 700 0.825rem/1.1 "Fira Sans", sans-serif;
+  text-transform: uppercase;
+  padding: 10px;
+  color: var(--g13);
+  background-color: red;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}

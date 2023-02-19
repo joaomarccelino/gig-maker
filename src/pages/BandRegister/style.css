@@ -1,0 +1,32 @@
+.band-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.band-register textarea {
+  resize: none;
+}
+
+.member-inputs {
+  margin-bottom: 40px;
+  background-color: var(--g13);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.member-inputs input{
+  width: 97%;
+}
+
+.members-title {
+  color: var(--g1);
+  font: 700 2rem/1.1 "Poppins", sans-serif;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.basic-multi-select {
+  margin-bottom: 20px;
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+}
