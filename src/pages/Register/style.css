@@ -36,6 +36,7 @@
   display: flex;
   align-items: center;
   gap: 40px;
+  margin-bottom: 40px;
 }
 
 .profile-pic-btn {
@@ -43,10 +44,20 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  text-align: center;
 }
 
 .profile-pic-btn p {
   font: 700 1rem/1.1 "Poppins", sans-serif;
+  color: var(--p1);
+}
+
+.profile-pic-btn span {
+  font: 700 0.5rem/1.1 "Poppins", sans-serif;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--g5);
 }
 
 .register-form {
@@ -98,4 +109,16 @@
 
 .center-btn {
   text-align: center;
+}
+
+#about-you {
+  resize: none;
+}
+
+#imageInput {
+  display: none;
+}
+
+.image-input-label {
+  cursor: pointer;
 }
