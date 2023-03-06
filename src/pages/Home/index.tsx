@@ -5,6 +5,7 @@ import ProfileTest from '../../assets/imgs/profile-test.png';
 import PostExample from '../../assets/imgs/post-example.png';
 import './style.css';
 import Feed from '../../components/Feed';
+import { useAuth } from "../../hook/AuthContext";
 
 const feedTest = [
   {
@@ -40,11 +41,12 @@ const feedTest = [
 ]
 
 const Home = () => {
+  const {user} = useAuth();
   return (
     <>
       <Header />
       <main className="home container">
-        <SideMenu />
+        <SideMenu userId={user.uid}/>
         <div className="home-items">
           <PostInput />
          <Feed  posts={feedTest}  />

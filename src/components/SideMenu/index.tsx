@@ -1,12 +1,17 @@
 import {AiOutlineUser, AiTwotoneNotification, AiOutlineTool} from 'react-icons/ai';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import './style.css';
-const SideMenu = () => {
+
+type SideMenuProps = {
+  userId: string;
+}
+
+const SideMenu = ({userId}: SideMenuProps) => {
   return (
     <nav className='side-menu'>
       <ul className='side-menu-items'>
         <li className='side-menu-item'>
-          <a href="/">
+          <a href={`/user/${userId}`}>
             <AiOutlineUser size={40} color="var(--g6)" />
             <p className='side-menu-text'>Meu perfil</p>            
           </a>

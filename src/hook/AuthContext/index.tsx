@@ -1,6 +1,6 @@
 import { getAdditionalUserInfo, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { useContext, createContext, ReactNode, useState } from "react";
+import { useContext, createContext, ReactNode, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../../services/firebase";
 
@@ -33,7 +33,6 @@ export type User = {
   spotRef: string;
   instruments: string[];
   about: string;
-  posts: Post[];
 }
 
 type AuthContextType = {
@@ -52,6 +51,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
   const navigate = useNavigate();
   const LOCAL_KEY = '@gig-maker-key'
   const [user, setUser] = useState({} as User);
+  const [loading, setLoading] = useState(false);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -73,7 +73,6 @@ export function AuthContextProvider({ children }: AuthContextProps) {
           spotRef: data.spotRef,
           instruments: data.instruments,
           about: data.about,
-          posts: data.posts
         }
         setUser(userData);
         localStorage.setItem(`${LOCAL_KEY}-user`, JSON.stringify(userData));
@@ -83,6 +82,16 @@ export function AuthContextProvider({ children }: AuthContextProps) {
       }
     } catch (error) {
       throw new Error(`Erro: ${error}`)
+    }
+  }
+
+  async function handleCheckLogin() {
+    setLoading(true)
+    const userData = await JSON.parse(localStorage.getItem(`${LOCAL_KEY}-user`) || '[]');
+    if (userData) {
+      setUser(userData);
+    } else {
+      navigate(`/`)
     }
   }
 
@@ -106,6 +115,10 @@ export function AuthContextProvider({ children }: AuthContextProps) {
     localStorage.removeItem(`${LOCAL_KEY}-user`);
     setUser({} as User);
   }
+
+  useEffect(() => {
+    handleCheckLogin();
+  }, [])
   return (
     <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
       {children}

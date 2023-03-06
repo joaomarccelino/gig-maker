@@ -8,6 +8,8 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
+import { useNavigate, useParams } from 'react-router-dom';
+import { handleUserRegister } from '../../services/user';
 type RegisterInputs = {
   name: string;
   district: string;
@@ -18,11 +20,13 @@ type RegisterInputs = {
 }
 
 const Register = () => {
+  const {id} = useParams();
   const [profPic, setProfPic] = useState<File>()
   const [imgSrc, setImgSrc] = useState<any>(null);
   const [showWebCam, setShowWebCam] = useState<boolean>(false);
   const [profPicURL, setProfPicURL] = useState<string>();
   const [profPicName, setProfPicName] = useState<string>();
+  const navigate = useNavigate()
   const options = instruments.map((i) => {
     return {
       value: i,
@@ -50,9 +54,25 @@ const Register = () => {
 
   const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control } = useForm<RegisterInputs>();
 
-  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
-    console.log(profPic)
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {  
+    if(id && profPic) {
+      const userData = {
+        uid: id,
+        name: data.name,
+        profilePic: '',
+        coverPic: '',
+        userThumb: '',
+        district: data.district,
+        city: data.city,
+        spotRef: data.refsPlaylist,
+        instruments: data.instruments,
+        about: data.about
+      }
+      const registerData = {
+        id, data: userData, image: profPic
+      }
+      handleUserRegister(registerData).then(() => navigate('/home'));
+    }
   }
 
   const videoConstraints = {
