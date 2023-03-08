@@ -10,23 +10,47 @@ import Webcam from 'react-webcam';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
 import { useNavigate, useParams } from 'react-router-dom';
 import { handleUserRegister } from '../../services/user';
+import { Instrument } from '../../hook/AuthContext';
+import InputMask from 'react-input-mask';
+
+
 type RegisterInputs = {
   name: string;
   district: string;
   city: string;
   refsPlaylist: string;
-  instruments: string[];
+  instruments: Instrument[];
   about: string;
+  phone: string;
 }
 
 const Register = () => {
-  const {id} = useParams();
+  const playlistRegex = /^https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22}$/;
+  const { id } = useParams();
+  const [cep, setCep] = useState<string>('');
+  const [city, setCity] = useState('');
   const [profPic, setProfPic] = useState<File>()
   const [imgSrc, setImgSrc] = useState<any>(null);
   const [showWebCam, setShowWebCam] = useState<boolean>(false);
   const [profPicURL, setProfPicURL] = useState<string>();
   const [profPicName, setProfPicName] = useState<string>();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const handleSearchCity = async () => {
+    const url = `https://viacep.com.br/ws/${cep}/json/`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (response.ok && !data.erro) {
+        setCity(data.localidade);
+        return data;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
   const options = instruments.map((i) => {
     return {
       value: i,
@@ -38,7 +62,7 @@ const Register = () => {
     if (e.target.files) {
       setProfPic(e.target.files[0])
       setProfPicName(e.target.files[0].name);
-      setProfPicURL(URL.createObjectURL(e.target.files[0]))  
+      setProfPicURL(URL.createObjectURL(e.target.files[0]))
     }
   }
 
@@ -54,25 +78,28 @@ const Register = () => {
 
   const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control } = useForm<RegisterInputs>();
 
-  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {  
-    if(id && profPic) {
-      const userData = {
-        uid: id,
-        name: data.name,
-        profilePic: '',
-        coverPic: '',
-        userThumb: '',
-        district: data.district,
-        city: data.city,
-        spotRef: data.refsPlaylist,
-        instruments: data.instruments,
-        about: data.about
-      }
-      const registerData = {
-        id, data: userData, image: profPic
-      }
-      handleUserRegister(registerData).then(() => navigate('/home'));
-    }
+  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
+    // const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
+    // if (id && profPic) {
+    //   const userData = {
+    //     uid: id,
+    //     name: data.name,
+    //     profilePic: '',
+    //     coverPic: '',
+    //     userThumb: '',
+    //     district: data.district,
+    //     city: data.city,
+    //     spotRef: data.refsPlaylist,
+    //     instruments: data.instruments,
+    //     about: data.about,
+    //     phone: phoneWithoutMask
+    //   }
+    //   const registerData = {
+    //     id, data: userData, image: profPic
+    //   }
+    //   handleUserRegister(registerData).then(() => navigate('/home'));
+    // }
+    console.log(data);
   }
 
   const videoConstraints = {
@@ -86,7 +113,7 @@ const Register = () => {
       <Header />
       <main className='container register'>
         <h1 className='register-title'>Antes de começar, preencha algumas informações</h1>
-       
+
         <div className="profile-pic-area" style={{ backgroundImage: `url(${profPicURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center center", objectFit: "contain", backgroundSize: "cover" }}>
 
         </div>
@@ -138,10 +165,29 @@ const Register = () => {
               })
             }
           </select>
+          <div className="cep">
+
+            <div>
+              <label htmlFor="city" >CEP</label>
+              <InputMask
+                mask="99999-999"
+                onChange={(e) => setCep(e.target.value)}
+              />
+            </div>
+            <button className="cep-btn" onClick={handleSearchCity}>Pesquisar</button>
+          </div>
           <label htmlFor="city">Cidade</label>
-          <input type="text" id="city" {...register("city", { required: "Campo obrigatório" })} />
+          <input type="text" id="city" {...register("city", { required: "Campo obrigatório" })} defaultValue={city} />
           <label htmlFor="refs-playlist">Playlist de referência Spotify</label>
-          <input type="text" id="refs-playlist" {...register("refsPlaylist", { required: "Campo obrigatório" })} />
+          <input
+            type="text"
+            id="refs-playlist"
+            {...register("refsPlaylist", { 
+              required: true,
+              pattern: playlistRegex
+            })}
+          />
+           {errors.refsPlaylist && <span className='form-error'>Playlist inválida</span>}
           <label htmlFor="instruments">Instrumentos que você toca</label>
           <Controller
             control={control}
@@ -154,6 +200,21 @@ const Register = () => {
                 isMulti
                 className='basic-multi-select'
                 classNamePrefix='select'
+              />
+            )}
+
+          />
+          <label htmlFor="phone">Whatsapp</label>
+          <Controller
+            control={control}
+            name="phone"
+            defaultValue=''
+            render={({ field: { onChange, onBlur, value } }) => (
+              <InputMask
+                mask="(99) 99999-9999"
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
               />
             )}
 

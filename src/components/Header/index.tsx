@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="container">
       <div className="header">
-        <a href="/">
+        <a href="/home">
           <img src={HeaderLogo} />
         </a>
         <input 

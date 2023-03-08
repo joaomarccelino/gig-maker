@@ -11,6 +11,11 @@ type Comment = {
   date: string;
 }
 
+export type Instrument = {
+  label: string;
+  value: string;
+}
+
 export type Post = {
   id: string;
   userThumb: string;
@@ -31,7 +36,7 @@ export type User = {
   district: string;
   city: string;
   spotRef: string;
-  instruments: string[];
+  instruments: Instrument[];
   about: string;
 }
 
