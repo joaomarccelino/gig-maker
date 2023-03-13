@@ -10,6 +10,7 @@
 
 .user-thumb {
   width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid var(--g7);
   margin-bottom: 12px;
@@ -38,4 +39,8 @@
 
 .send-btn {
   align-self: center;
+}
+
+.post-picture-photo {
+  margin-bottom: 20px;
 }

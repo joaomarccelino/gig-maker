@@ -8,7 +8,7 @@ type Comments = {
   date: string;
 }
 
-export type FeedPostProps = {
+export interface FeedPostProps {
   id: string;
   userThumb: string;
   userName: string;

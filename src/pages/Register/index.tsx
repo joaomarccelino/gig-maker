@@ -79,27 +79,26 @@ const Register = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control } = useForm<RegisterInputs>();
 
   const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
-    // const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
-    // if (id && profPic) {
-    //   const userData = {
-    //     uid: id,
-    //     name: data.name,
-    //     profilePic: '',
-    //     coverPic: '',
-    //     userThumb: '',
-    //     district: data.district,
-    //     city: data.city,
-    //     spotRef: data.refsPlaylist,
-    //     instruments: data.instruments,
-    //     about: data.about,
-    //     phone: phoneWithoutMask
-    //   }
-    //   const registerData = {
-    //     id, data: userData, image: profPic
-    //   }
-    //   handleUserRegister(registerData).then(() => navigate('/home'));
-    // }
-    console.log(data);
+    const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
+    if (id && profPic) {
+      const userData = {
+        uid: id,
+        name: data.name,
+        profilePic: '',
+        coverPic: '',
+        userThumb: '',
+        district: data.district,
+        city: data.city,
+        spotRef: data.refsPlaylist,
+        instruments: data.instruments,
+        about: data.about,
+        phone: phoneWithoutMask
+      }
+      const registerData = {
+        id, data: userData, image: profPic
+      }
+      handleUserRegister(registerData).then(() => navigate('/home'));
+    }
   }
 
   const videoConstraints = {

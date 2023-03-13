@@ -10,8 +10,9 @@ import BandProfile from './pages/BandProfile';
 import BandRegister from './pages/BandRegister';
 import { AuthContextProvider } from './hook/AuthContext';
 
+const queryClient = new QueryClient();
+
 function App() {
-  const queryClient = new QueryClient();
   return (
     <>
       <QueryClientProvider client={queryClient}>
