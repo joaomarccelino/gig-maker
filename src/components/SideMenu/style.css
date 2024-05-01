@@ -24,3 +24,21 @@
   color: var(--g2);
   text-transform: uppercase;
 }
+
+@media (max-width: 900px) {
+  .side-menu-item {
+    width: 60%;
+    padding: 10px;
+  }
+
+  .side-menu-text {
+    font: 700 0.5rem / 1.1 "Poppins", sans-serif;
+  }
+}
+
+@media (max-width: 900px) {
+  .side-menu {
+    display: none;
+  }
+
+}

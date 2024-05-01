@@ -1,0 +1,18 @@
+.search-result-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--g12);
+  border-radius: 8px;
+  justify-content: space-between;
+}
+
+.search-result-card img {
+  width: 10%;
+  border-radius: 50px;
+}
+
+.search-result-card a {
+  font: 700 1rem/1.1 "Poppins", sans-serif;
+  color: var(--g3);
+}

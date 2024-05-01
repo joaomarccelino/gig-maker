@@ -24,7 +24,6 @@ const Home = () => {
   const { user } = useAuth();
   const { isLoading, error, data: posts } = useQuery(['gig-maker-posts'],
     () => handleGetAllPosts().then(res => {
-      console.log(res)
       return res
     }));
   if (isLoading) return <p>Loading...</p>
@@ -42,7 +41,7 @@ const Home = () => {
     <>
       <Header />
       <main className="home container">
-        <SideMenu userId={user.uid} />
+        <SideMenu userId={user.id} />
         <div className="home-items">
           <PostInput />
           {

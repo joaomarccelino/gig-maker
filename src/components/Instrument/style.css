@@ -9,3 +9,13 @@
   text-transform: uppercase;
   color: var(--p2);
 }
+
+@media (max-width: 650px) {
+  .instrument {
+    padding: 30px 4px;
+  }
+
+  .instrument p {
+    font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  }
+}

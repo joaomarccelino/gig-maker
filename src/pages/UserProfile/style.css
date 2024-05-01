@@ -101,3 +101,9 @@
 .user-btn.active {
   background-color: var(--p1);
 }
+
+@media (max-width: 1000px) {
+  .user-instruments-refs {
+    grid-template-columns: 1fr;
+  }
+}

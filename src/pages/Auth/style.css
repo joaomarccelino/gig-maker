@@ -29,3 +29,26 @@
   color: var(--p2);
   font-weight: bold;
 }
+
+@media (max-width: 800px) {
+  .page-info h1 {
+    font-size: 2rem;
+  }
+  .page-info p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+
+  .page-info {
+    gap: 20px;
+  }
+
+  .page-info h1 {
+    font-size: 1.5rem;
+  }
+  .page-info p {
+    font-size: 0.75rem;
+  }
+}

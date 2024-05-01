@@ -28,7 +28,7 @@ export type Post = {
 }
 
 export type User = {
-  uid: string;
+  id: string;
   name: string;
   profilePic: string;
   coverPic: string;
@@ -38,7 +38,33 @@ export type User = {
   spotRef: string;
   instruments: Instrument[];
   about: string;
+  type: string;
 }
+export type Band = {
+  id?: string;
+  name: string;
+  district: string;
+  city: string;
+  profilePic?: string;
+  refsPlaylist: string;
+  repPlaylist: string;
+  about: string;
+  members: Member[];
+  type: string;
+}
+
+type instrument ={
+  label: string;
+  value: string;
+}
+
+export type Member = {
+  id: string;
+  name?: string;
+  instruments: instrument[];
+  profilePic?: string;
+}
+
 
 type AuthContextType = {
   user: User;
@@ -68,7 +94,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
       if (userSnap.exists()) {
         const data = userSnap.data();
         userData = {
-          uid: data.uid,
+          id: data.uid,
           name: data.name,
           profilePic: data.profilePic ,
           coverPic: data.coverPic ,
@@ -78,12 +104,13 @@ export function AuthContextProvider({ children }: AuthContextProps) {
           spotRef: data.spotRef,
           instruments: data.instruments,
           about: data.about,
+          type: data.type
         }
         setUser(userData);
         localStorage.setItem(`${LOCAL_KEY}-user`, JSON.stringify(userData));
         navigate('/home');
       } else {
-        navigate(`/registro/${userData.uid}`);
+        navigate(`/registro/${userData.id}`);
       }
     } catch (error) {
       throw new Error(`Erro: ${error}`)
@@ -109,6 +136,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
         navigate(`registro/${userData.uid}`);
       } else {
         handleGetUserData(userData.uid);
+        navigate('/home');
       }
     } catch (error) {
       throw new Error(`Erro: ${error}`)
@@ -119,6 +147,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
     signOut(auth);
     localStorage.removeItem(`${LOCAL_KEY}-user`);
     setUser({} as User);
+    navigate('/');
   }
 
   useEffect(() => {

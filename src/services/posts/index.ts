@@ -9,6 +9,11 @@ type PostProps = {
   postText: string;
 }
 
+type AddPostProps = {
+  data: PostProps;
+  image: File | undefined;
+}
+
 const handleAddPostImage = async (image: File, id: string) => {
   const postRef = doc(firestore, "posts", id);
   const imageRef = storageRef(storage, `${id}/${image.name}`);
@@ -21,7 +26,7 @@ const handleAddPostImage = async (image: File, id: string) => {
 }
 
 
-export const handleAddPost = async (data: PostProps, image: File | undefined) => {
+export const handleAddPost = async ({data, image}: AddPostProps) => {
   const postRef = collection(firestore, "posts");
   await addDoc(postRef, data).then(value => {
     if (image !== undefined) {
@@ -39,6 +44,29 @@ export const handleGetAllPosts = async () : Promise<FeedPostProps[]> => {
     const userInstruments = userData.instruments.map(i => i.value);
     const postResult: FeedPostProps = {
       id: postDoc.id,
+      authorId: postData.userId,
+      postPhoto: postData.postPhoto,
+      postText: postData.postText,
+      postComments: postData.postComments,
+      userThumb: userData.userThumb,
+      userName: userData.name,
+      userInstruments: userInstruments.join(),
+    }
+    return postResult;
+  }))
+  return postsData;
+}
+
+export const handleGetUserPosts = async (id: string) : Promise<FeedPostProps[]> => {
+  const postsRef = collection(firestore, "posts");
+  const postsSnapshot = await getDocs(postsRef);
+  const postsData : FeedPostProps[] = await Promise.all(postsSnapshot.docs.map(async (postDoc) => {
+    const postData = postDoc.data();
+    const userData = await handleGetUser(postData.userId);
+    const userInstruments = userData.instruments.map(i => i.value);
+    const postResult: FeedPostProps = {
+      id: postDoc.id,
+      authorId: postData.userId,
       postPhoto: postData.postPhoto,
       postText: postData.postText,
       postComments: postData.postComments,

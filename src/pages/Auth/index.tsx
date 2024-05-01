@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthHeader from "../../components/AuthHeader";
 import SignModal from "../../components/SignModal";
 import './style.css';
+import { useAuth } from "../../hook/AuthContext";
+import { useNavigate } from "react-router-dom";
 const Auth = () => {
   const [showSignModal, setShowSignModal] = useState<boolean>(false);
+  const {user} = useAuth();
+
+  const navigate = useNavigate();
 
   const handleShowSignModal = () => {
     setShowSignModal(true);
   }
+
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate('/home')
+  //   }
+  // }, [user])
 
   return (
     <main className="auth-page">

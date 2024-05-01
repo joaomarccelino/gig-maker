@@ -1,10 +1,11 @@
-import ProfileTest from '../../assets/imgs/profile-test.png';
 import { BsImage, BsYoutube } from 'react-icons/bs';
 import './style.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '../../hook/AuthContext';
 import { ChangeEvent, useState } from 'react';
 import { handleAddPost } from '../../services/posts';
+import compressImage from '../../services/posts/compressImage';
+import { useMutation, useQueryClient } from 'react-query';
 
 type PostInputs = {
   postText: string;
@@ -12,18 +13,41 @@ type PostInputs = {
 
 const PostInput = () => {
   const { user } = useAuth();
-  const { register, handleSubmit } = useForm<PostInputs>();
+  const { register, handleSubmit, reset } = useForm<PostInputs>();
   const [postPic, setPostPic] = useState<File>();
   const [postPicName, setPostPicName] = useState<string>();
   const [postPicURL, setPostPicURL] = useState<string>();
-  const onSubmit: SubmitHandler<PostInputs> = async (data) => {
-    const newPostData = {
-      userId: user.uid,
-      postText: data.postText,
-      postPhoto: ''
+
+  const queryClient = useQueryClient();
+  const {
+    mutate: createNewPost,
+  } = useMutation(handleAddPost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['gig-maker-posts']);
+      reset()
+      setPostPic(undefined);
+      setPostPicName('');
+      setPostPicURL('');
     }
-    handleAddPost(newPostData, postPic)
-    console.log(data);
+  })
+
+  const onSubmit: SubmitHandler<PostInputs> = async (data) => {
+    if (postPic) {
+        const compressedImage = await compressImage(postPic, 0.6);
+        const newPostData = {
+          userId: user.id,
+          postText: data.postText,
+          postPhoto: ''
+        }
+        createNewPost({data: newPostData, image: compressedImage});
+    } else {
+      const newPostData = {
+        userId: user.id,
+        postText: data.postText,
+        postPhoto: ''
+      }
+      createNewPost({data: newPostData, image: postPic});
+    }
   }
 
   function saveImage(e: ChangeEvent<HTMLInputElement>) {
@@ -37,8 +61,8 @@ const PostInput = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="post-input">
       <img src={user.userThumb} alt="Perfil" className='user-thumb post-input-user-thumb' />
       {
-            postPic && <img className='post-picture-photo' src={postPicURL} />
-          }
+        postPic && <img className='post-picture-photo' src={postPicURL} />
+      }
       <textarea id="" cols={30} rows={10} placeholder="Qual a boa pra hoje?" {...register("postText")} />
       <div className="post-menu">
         <label htmlFor="imageInput" className="image-input-label">

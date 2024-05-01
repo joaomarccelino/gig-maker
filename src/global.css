@@ -15,6 +15,7 @@
   --p1: #1B9AAA;
   --p2: #00E2FF;
   --p3: #A3D2D8;
+  --icon-size: 40;
 }
 
 body,
@@ -46,6 +47,11 @@ img {
 
 a {
   text-decoration: none;
+  transition: 0.3ms ease-out;
+}
+
+a:hover {
+  opacity: 0.6;
 }
 
 .container {
@@ -96,4 +102,10 @@ a {
   border-radius: 8px;
   margin-bottom: 20px;
   cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  :root{
+    --icon-size: 100;
+  }
 }

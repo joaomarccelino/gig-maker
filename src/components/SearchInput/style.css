@@ -1,0 +1,10 @@
+.search-result {
+  background-color: var(--g6);
+}
+
+.member-name {
+  display: block;
+  color: var(--g1);
+  font: 700 1rem/1.1 "Poppins", sans-serif;
+  margin-bottom: 20px;
+}

@@ -86,3 +86,30 @@
     top: 0;    
   }
 }
+
+@media (max-width: 650px) {
+  .sign-modal {
+    max-width: 400px;
+    height: 40%;
+  }
+}
+
+
+@media (max-width: 450px) {
+  .sign-modal {
+    max-width: 340px;
+    height: 30%;
+  }
+  .signTitle {
+    font-size: 1.5rem;
+  }
+
+  .sign-modal-btn {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+  .sign-modal p {
+    font-size: 0.75rem;
+  }
+
+}

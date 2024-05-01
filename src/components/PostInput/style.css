@@ -14,7 +14,6 @@
   border-radius: 50%;
   border: 1px solid var(--g7);
   margin-bottom: 12px;
-  
 }
 
 .post-input-user-thumb {
@@ -43,4 +42,19 @@
 
 .post-picture-photo {
   margin-bottom: 20px;
+}
+
+@media (max-width: 700px) {
+  .post-input {
+    padding: 10px 30px 0px 30px;
+  }
+
+  .post-input-user-thumb {
+    margin-left: -20px;
+  }
+
+  .user-thumb {
+    width: 20px;
+    height: 20px;
+  }
 }

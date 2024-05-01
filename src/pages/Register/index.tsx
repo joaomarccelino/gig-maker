@@ -25,7 +25,7 @@ type RegisterInputs = {
 }
 
 const Register = () => {
-  const playlistRegex = /^https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22}$/;
+  const playlistRegex = /^https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22}(?:\?.*)?$/;
   const { id } = useParams();
   const [cep, setCep] = useState<string>('');
   const [city, setCity] = useState('');
@@ -82,7 +82,7 @@ const Register = () => {
     const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
     if (id && profPic) {
       const userData = {
-        uid: id,
+        id: id,
         name: data.name,
         profilePic: '',
         coverPic: '',
@@ -92,6 +92,7 @@ const Register = () => {
         spotRef: data.refsPlaylist,
         instruments: data.instruments,
         about: data.about,
+        type: 'user',
         phone: phoneWithoutMask
       }
       const registerData = {

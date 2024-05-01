@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
@@ -6,10 +6,19 @@ import Select from 'react-select';
 import Header from '../../components/Header';
 import { brDistricts, instruments } from '../../utils/commonData';
 import './style.css';
+import SearchInput from '../../components/SearchInput';
+import { handleBandRegister } from '../../services/band';
+import { useNavigate } from 'react-router-dom';
+import { dataURLtoFile } from '../../utils/dataURLtoFile';
+
+type instrument = {
+  value: string;
+  label: string;
+}
 
 type Member = {
-  name: string;
-  instruments: string[]
+  id: string;
+  instruments: instrument[]
 }
 
 type BandRegisterInputs = {
@@ -23,6 +32,29 @@ type BandRegisterInputs = {
 }
 
 const BandRegister = () => {
+  const [profPic, setProfPic] = useState<File>()
+  const [imgSrc, setImgSrc] = useState<any>(null);
+  const [showWebCam, setShowWebCam] = useState<boolean>(false);
+  const [profPicURL, setProfPicURL] = useState<string>();
+  const [profPicName, setProfPicName] = useState<string>();
+
+  function saveImage(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      setProfPic(e.target.files[0])
+      setProfPicName(e.target.files[0].name);
+      setProfPicURL(URL.createObjectURL(e.target.files[0]))
+    }
+  }
+
+  const webcamRef = useRef<any>(null);
+
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    const image = dataURLtoFile(imageSrc, "profile.jpg");
+    setProfPic(image);
+    setProfPicName(image.name);
+    setProfPicURL(imageSrc);
+  }, [webcamRef, setImgSrc]);
   const [fields, setFields] = useState([0])
 
   const options = instruments.map((i) => {
@@ -32,6 +64,8 @@ const BandRegister = () => {
     }
   })
 
+
+  const navigate = useNavigate();
 
   const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control } = useForm<BandRegisterInputs>()
 
@@ -49,8 +83,38 @@ const BandRegister = () => {
   }
 
   const onSubmit: SubmitHandler<BandRegisterInputs> = async (data) => {
-    console.log(data);
+
+    if (profPic) {
+
+
+      const membersData = data.members.map((member, index) => {
+        return {
+          id: member.id,
+          instruments: member.instruments
+        }
+      })
+
+      const bandData = {
+        name: data.name,
+        district: data.district,
+        city: data.city,
+        refsPlaylist: data.refsPlaylist,
+        repPlaylist: data.repPlaylist,
+        about: data.about,
+        type: 'band',
+        members: membersData
+      }
+
+      const registerData = {
+        data: bandData, image: profPic
+      }
+
+      handleBandRegister(registerData).then(() => navigate('/home'));
+    }
+
   }
+
+  console.log(watch())
   return (
     <>
       <Header />
@@ -96,8 +160,7 @@ const BandRegister = () => {
               fields.map((field, index) => {
                 return (
                   <div key={field + index} className="member-inputs">
-                    <label htmlFor="member-name">Nome</label>
-                    <input type="text" id="member-name" {...register(`members.${index}.name`, { required: "Campo obrigatório" })} />
+                    <SearchInput type="text" id="member-name" {...register(`members.${index}.id`, { required: "Campo obrigatório" })} />
                     <label htmlFor="instruments">Instrumentos</label>
                     <Controller
                       control={control}
@@ -120,9 +183,8 @@ const BandRegister = () => {
             }
           </div>
           <button className="register-btn" onClick={addNewMember}>Adicionar membro</button>
-
           <div className="center-btn">
-            <button type='submit' className='register-btn' >Criar banda</button>
+            <button type='submit' className='register-btn'>Criar banda</button>
           </div>
         </form>
 

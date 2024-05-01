@@ -4,8 +4,6 @@
   align-items: center;
 }
 
-
-
 .band-info {
   display: flex;
   flex-direction: column;
@@ -17,7 +15,7 @@
 
 .band-cover-photo {
   background-size: cover;
-  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.8);
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .8);
   width: 100%;
   height: 600px;
   border-radius: 8px;
@@ -28,6 +26,7 @@
 
 .band-menu {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
 
@@ -104,7 +103,7 @@
 
 .follow-btn {
   color: var(--g1);
-  font: 700 2rem/1.1 "Poppins", sans-serif;
+  font: 700 1.5rem/1.1 "Poppins", sans-serif;
 }
 
 .members-area h2 {
@@ -119,4 +118,31 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+}
+
+@media (max-width: 800px) {
+  .band-instruments-refs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .band-instruments,
+  .band-references {
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .members {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .members {
+    grid-template-columns: 1fr;
+    margin-bottom: 40px;
+  }
+  .band-prof-photo {
+    max-width: 340px;
+  }
 }

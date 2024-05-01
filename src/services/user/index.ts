@@ -1,5 +1,5 @@
 import { instruments } from './../../utils/commonData';
-import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore"
 import { firestore, storage } from "../firebase"
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { User } from "../../hook/AuthContext";
@@ -14,7 +14,6 @@ type UserRegisterProps = {
 
 
 export const handleAddUserImage = async (id: string, image: File) => {
-
   const usersRef = doc(firestore, "users", id);
   const imageRef = storageRef(storage, `${id}/${image.name}`);
   uploadBytes(imageRef, image).then(async snapshot => {
@@ -32,6 +31,35 @@ export const handleUserRegister = async ({ id, data, image }: UserRegisterProps)
   })
 }
 
+export const handleGetUsers = async () => {
+  const dbRef = collection(firestore, "users");
+  try {
+    const querySnapshot = await getDocs(dbRef);
+    let usersData: User[] = [];
+    querySnapshot.forEach((doc) => {
+      const snapData = {
+        id: doc.id,
+        name: doc.data().name,
+        about: doc.data().about,
+        city: doc.data().city,
+        coverPic: doc.data().coverPic,
+        district: doc.data().district,
+        instruments: doc.data().instruments,
+        phone: doc.data().phone,
+        profilePic: doc.data().profilePic,
+        spotRef: doc.data().spotRef,
+        uid: doc.data().uid,
+        type: doc.data().type,
+        userThumb: doc.data().userThumb
+      }
+      usersData.push(snapData);
+    })
+    return usersData;
+  } catch (error) {
+    throw new Error();
+  }
+}
+
 export const handleGetUser = async (id: string) => {
   const userRef = doc(firestore, "users", id);
   try {
@@ -40,7 +68,7 @@ export const handleGetUser = async (id: string) => {
     if (docSnap.exists()) {
       const data = docSnap.data();
       userData = {
-        uid: data.uid,
+        id: data.uid,
         about: data.about,
         city: data.city,
         coverPic: data.coverPic,
@@ -49,6 +77,7 @@ export const handleGetUser = async (id: string) => {
         name: data.name,
         profilePic: data.profilePic,
         spotRef: data.spotRef,
+        type: data.type,
         userThumb: data.userThumb
       }
     }
