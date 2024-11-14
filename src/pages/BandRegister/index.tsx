@@ -10,6 +10,7 @@ import SearchInput from '../../components/SearchInput';
 import { handleBandRegister } from '../../services/band';
 import { useNavigate } from 'react-router-dom';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
+import { useAuth } from '../../hook/AuthContext';
 
 type instrument = {
   value: string;
@@ -37,7 +38,7 @@ const BandRegister = () => {
   const [showWebCam, setShowWebCam] = useState<boolean>(false);
   const [profPicURL, setProfPicURL] = useState<string>();
   const [profPicName, setProfPicName] = useState<string>();
-
+  const { user } = useAuth();
   function saveImage(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
       setProfPic(e.target.files[0])
@@ -117,7 +118,7 @@ const BandRegister = () => {
   console.log(watch())
   return (
     <>
-      <Header />
+      <Header userId={user?.id || ''} />
       <main className='container band-register'>
         <h1 className='register-title'>Criar perfil de banda</h1>
         <div className="profile-pic-area">

@@ -22,7 +22,6 @@ const teste = [
 
 const Home = () => {
   const { user } = useAuth();
-  console.log(user?.id)
   const { isLoading, error, data: posts } = useQuery(['gig-maker-posts'],
     () => handleGetAllPosts().then(res => {
       return res
@@ -41,7 +40,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header userId={user?.id || ''} />
       <main className="home container">
         <SideMenu userId={user?.id || ''} />
         <div className="home-items">

@@ -9,7 +9,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hook/AuthContext';
 
-const Header = () => {
+type HeaderProps = {
+  userId: string;
+}
+
+
+const Header = ({userId} : HeaderProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const {handleLogout} = useAuth()
@@ -68,6 +73,12 @@ const Header = () => {
               </a>
               <a href="/">
                 <FaMusic color="var(--g5)" size={30} /> Bandas
+              </a>
+              <a href={`/user/${userId}`}>
+                <BsFillPeopleFill color="var(--g5)" size={30} /> Meu Perfil
+              </a>
+              <a href={"/minhas-gigs"}>
+                <BsFillPeopleFill color="var(--g5)" size={30} /> Minhas Gigs
               </a>
               <button onClick={handleLogout} className='icon-btn'>
                 <IoIosLogOut color="red" size={30} /> Sair

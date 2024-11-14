@@ -10,7 +10,7 @@ import Webcam from 'react-webcam';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
 import { useNavigate, useParams } from 'react-router-dom';
 import { handleUserRegister } from '../../services/user';
-import { Instrument } from '../../hook/AuthContext';
+import { Instrument, useAuth } from '../../hook/AuthContext';
 import InputMask from 'react-input-mask';
 
 
@@ -35,6 +35,7 @@ const Register = () => {
   const [profPicURL, setProfPicURL] = useState<string>();
   const [profPicName, setProfPicName] = useState<string>();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const handleSearchCity = async () => {
     const url = `https://viacep.com.br/ws/${cep}/json/`;
     try {
@@ -110,7 +111,7 @@ const Register = () => {
 
   return (
     <>
-      <Header />
+      <Header userId={user?.id || ''} />
       <main className='container register'>
         <h1 className='register-title'>Antes de começar, preencha algumas informações</h1>
 

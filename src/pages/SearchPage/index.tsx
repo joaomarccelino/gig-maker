@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import SearchResultCard from "../../components/SearchResultCard";
 import './style.css';
+import { useAuth } from "../../hook/AuthContext";
 
 const SearchPage = () => {
   const { searchTerm } = useParams();
@@ -23,7 +24,7 @@ const SearchPage = () => {
     }
   });
   const [searchResults, setSearchResults] = useState(searchData);
-
+  const { user } = useAuth();
   useEffect(() => {
     const filteredResults = searchData?.filter(item =>
       item.name.toLowerCase().includes(searchWord.toLowerCase()));
@@ -36,7 +37,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <Header />
+      <Header userId={user?.id || ''} />
       <main className="search-page container">
         <input type="text" value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
         {

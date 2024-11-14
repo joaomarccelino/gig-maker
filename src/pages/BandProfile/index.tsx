@@ -7,6 +7,7 @@ import BandMember from "../../components/BandMember";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { handleGetBand } from "../../services/band";
+import { useAuth } from "../../hook/AuthContext";
 
 
 
@@ -15,14 +16,14 @@ const BandProfile = () => {
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data'],
     () => handleGetBand(id || '').then(res => { console.log(res); return res }));
   console.log(band)
-
+  const { user } = useAuth();
   if (isLoading) return <p>Loading...</p>
 
   if (error) return <p>Ocorreu um erro:</p>;
 
   return (
     <>
-      <Header />
+      <Header userId={user?.id || ''} />
       <main className="band-profile container">
         <div className="band-info">
           <div className="band-cover-photo" style={{ backgroundImage: `url(${BandProfileTest})`, backgroundRepeat: "no-repeat" }}>

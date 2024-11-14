@@ -4,41 +4,21 @@ import GigListCard from "../../components/GigListCard";
 import './style.css'
 import { useQuery } from "react-query";
 import { handleGetBands } from "../../services/band";
+import { useAuth } from "../../hook/AuthContext";
 const MyGigs = () => {
   const { isLoading, error, data: bands } = useQuery(['gig-maker-bands'],
     () => handleGetBands().then(res => {
       return res
     }));
+  const { user } = useAuth();
 
   if (isLoading) return <p>Loading...</p>
 
   if (error) return <p>Ocorreu um erro:</p>;
 
-
-  const GigsTest = [
-    {
-      id: '123',
-      bandName: 'PERDIDOS',
-      image: BandPhoto,
-      location: "São Miguel Arcanjo/SP"
-    },
-    {
-      id: '456',
-      bandName: 'Azul Pitanga',
-      image: BandPhoto,
-      location: "Tatuí/SP"
-    },
-    {
-      id: '123',
-      bandName: 'PERDIDOS',
-      image: BandPhoto,
-      location: "São Miguel Arcanjo/SP"
-    },
-  ]
-
   return (
     <div className="container">
-      <Header />
+      <Header userId={user?.id || ''} />
       <div className="gig-list">
         {
           bands && bands.map((gig) => {

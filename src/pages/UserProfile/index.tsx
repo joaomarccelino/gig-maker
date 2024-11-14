@@ -13,7 +13,6 @@ const UserProfile = () => {
   const { id } = useParams();
   const { isLoading, error, data: user } = useQuery(['gigmaker-user-data'],
     () => handleGetUser(id || '').then(res => { return res }));
-
   if (isLoading) return <p>Loading...</p>
 
   if (error) return <p>Ocorreu um erro:</p>;
@@ -21,7 +20,7 @@ const UserProfile = () => {
   if (user) {
     return (
       <>
-        <Header />
+        <Header userId={user?.id || ''} />
         <main className="user-profile container">
           <div className="user-info">
             <div className="user-cover-photo" style={{ backgroundImage: `url(${PostExample})`, backgroundRepeat: "no-repeat" }}>
