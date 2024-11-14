@@ -9,12 +9,12 @@ type Comment = {
   userPic: string;
   text: string;
   date: string;
-}
+};
 
 export type Instrument = {
   label: string;
   value: string;
-}
+};
 
 export type Post = {
   id: string;
@@ -25,7 +25,7 @@ export type Post = {
   postVideoLink?: string;
   postText: string;
   postComments: Comment[];
-}
+};
 
 export type User = {
   id: string;
@@ -39,7 +39,8 @@ export type User = {
   instruments: Instrument[];
   about: string;
   type: string;
-}
+};
+
 export type Band = {
   id?: string;
   name: string;
@@ -51,38 +52,37 @@ export type Band = {
   about: string;
   members: Member[];
   type: string;
-}
+};
 
-type instrument ={
+type instrument = {
   label: string;
   value: string;
-}
+};
 
 export type Member = {
   id: string;
   name?: string;
   instruments: instrument[];
   profilePic?: string;
-}
-
+};
 
 type AuthContextType = {
-  user: User;
+  user: User | null;
   handleLogin(): void;
   handleLogout(): void;
-}
+};
 
 type AuthContextProps = {
   children: ReactNode;
-}
+};
 
-export const AuthContext = createContext({} as AuthContextType)
+export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProps) {
   const navigate = useNavigate();
-  const LOCAL_KEY = '@gig-maker-key'
-  const [user, setUser] = useState({} as User);
-  const [loading, setLoading] = useState(false);
+  const LOCAL_KEY = '@gig-maker-key';
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -94,10 +94,10 @@ export function AuthContextProvider({ children }: AuthContextProps) {
       if (userSnap.exists()) {
         const data = userSnap.data();
         userData = {
-          id: data.uid,
+          id: data.id,
           name: data.name,
-          profilePic: data.profilePic ,
-          coverPic: data.coverPic ,
+          profilePic: data.profilePic,
+          coverPic: data.coverPic,
           userThumb: data.userThumb,
           district: data.district,
           city: data.city,
@@ -105,7 +105,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
           instruments: data.instruments,
           about: data.about,
           type: data.type
-        }
+        };
         setUser(userData);
         localStorage.setItem(`${LOCAL_KEY}-user`, JSON.stringify(userData));
         navigate('/home');
@@ -113,25 +113,25 @@ export function AuthContextProvider({ children }: AuthContextProps) {
         navigate(`/registro/${userData.id}`);
       }
     } catch (error) {
-      throw new Error(`Erro: ${error}`)
+      throw new Error(`Erro: ${error}`);
     }
   }
 
   async function handleCheckLogin() {
-    setLoading(true)
-    const userData = await JSON.parse(localStorage.getItem(`${LOCAL_KEY}-user`) || '[]');
-    if (userData) {
+    const userData = JSON.parse(localStorage.getItem(`${LOCAL_KEY}-user`) || 'null');
+    if (userData && userData.id) {
       setUser(userData);
     } else {
-      navigate(`/`)
+      navigate(`/`);
     }
+    setLoading(false);
   }
 
   async function handleLogin() {
     try {
       const res = await signInWithPopup(auth, googleProvider);
       const userData = res.user;
-      const firstLogin = getAdditionalUserInfo(res)?.isNewUser
+      const firstLogin = getAdditionalUserInfo(res)?.isNewUser;
       if (firstLogin) {
         navigate(`registro/${userData.uid}`);
       } else {
@@ -139,27 +139,28 @@ export function AuthContextProvider({ children }: AuthContextProps) {
         navigate('/home');
       }
     } catch (error) {
-      throw new Error(`Erro: ${error}`)
+      throw new Error(`Erro: ${error}`);
     }
   }
 
   async function handleLogout() {
     signOut(auth);
     localStorage.removeItem(`${LOCAL_KEY}-user`);
-    setUser({} as User);
+    setUser(null);
     navigate('/');
   }
 
   useEffect(() => {
     handleCheckLogin();
-  }, [])
+  }, []);
+
   return (
     <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
-      {children}
+      {loading ? <p>Loading...</p> : children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export const useAuth = () => {
   return useContext(AuthContext);
-}
+};

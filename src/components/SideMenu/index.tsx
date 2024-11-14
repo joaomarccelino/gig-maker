@@ -43,12 +43,6 @@ const SideMenu = ({ userId }: SideMenuProps) => {
         </li>
         <li className='side-menu-item'>
           <a href="/">
-            <AiTwotoneNotification size={iconSize} color="var(--g6)" />
-            <p className='side-menu-text'>Meus anúncios</p>
-          </a>
-        </li>
-        <li className='side-menu-item'>
-          <a href="/">
             <AiOutlineTool size={iconSize} color="var(--g6)" />
             <p className='side-menu-text'>Configurações</p>
           </a>

@@ -14,6 +14,7 @@ const GigListCard = ({ id, image, bandName, location }: GigListCardProps) => {
       <p className='band-name'>{bandName}</p>
       <p className="band-location">{location}</p>
       <a href={`/banda/${id}`}>Acessar Perfil</a>
+      <a href={`page/banda/${id}`}>Acessar Landing Page</a>
     </div>
   )
 }

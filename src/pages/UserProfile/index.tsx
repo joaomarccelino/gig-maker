@@ -30,9 +30,6 @@ const UserProfile = () => {
             <h1>{user.name}</h1>
             <span className="user-city">{user.city}</span>
             <div className="user-menu">
-              <button className="icon-btn">
-                <HiUserAdd color="var(--p1)" size={40} />
-              </button>
               <a href="https://wa.me/5515991751583?text=Ol%C3%A1%21%20Te%20encontrei%20no%20GIG%20Maker">
                 <AiOutlineWhatsApp color="var(--p1)" size={40} />
               </a>

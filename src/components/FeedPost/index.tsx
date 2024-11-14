@@ -32,7 +32,7 @@ const FeedPost = ({ id, authorId, userThumb, userName, userInstruments, postPhot
         </a>
         <span>({userInstruments})</span>
       </div>
-      <img src={postPhoto} alt="Foto" className="post-photo" />
+      {postPhoto && <img src={postPhoto} alt="Foto" className="post-photo" />}
       <div className="feed-post-menu">
         <button className="icon-btn">
           <BsMusicNote size={40} color="var(--g12)" />

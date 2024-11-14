@@ -35,14 +35,14 @@ const PostInput = () => {
     if (postPic) {
         const compressedImage = await compressImage(postPic, 0.6);
         const newPostData = {
-          userId: user.id,
+          userId: user?.id || '',
           postText: data.postText,
           postPhoto: ''
         }
         createNewPost({data: newPostData, image: compressedImage});
     } else {
       const newPostData = {
-        userId: user.id,
+        userId: user?.id || '',
         postText: data.postText,
         postPhoto: ''
       }
@@ -59,7 +59,7 @@ const PostInput = () => {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="post-input">
-      <img src={user.userThumb} alt="Perfil" className='user-thumb post-input-user-thumb' />
+      <img src={user?.userThumb} alt="Perfil" className='user-thumb post-input-user-thumb' />
       {
         postPic && <img className='post-picture-photo' src={postPicURL} />
       }

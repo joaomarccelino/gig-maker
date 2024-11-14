@@ -152,21 +152,24 @@ const Register = () => {
         }
         <h2 className="register-subtitle">Foto de perfil</h2>
         <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="name" >Nome</label>
-          <input type="text" id="name" {...register("name", { required: "Campo obrigatório" })} />
-          <label htmlFor="district">Estado</label>
-          <select id="district" {...register("district", { required: "Campo obrigatório" })} defaultValue={'DEFAULT'}  >
-            <option value="DEFAULT" disabled hidden>Escolha um estado</option>
-            {
-              brDistricts.map((d) => {
-                return (
-                  <option key={d.uf} value={d.uf}>{d.name}</option>
-                )
-              })
-            }
-          </select>
+          <div className='register-form-item'>
+            <label htmlFor="name" >Nome</label>
+            <input type="text" id="name" {...register("name", { required: "Campo obrigatório" })} />
+          </div>
+          <div className='register-form-item'>
+            <label htmlFor="district">Estado</label>
+            <select id="district" {...register("district", { required: "Campo obrigatório" })} defaultValue={'DEFAULT'}  >
+              <option value="DEFAULT" disabled hidden>Escolha um estado</option>
+              {
+                brDistricts.map((d) => {
+                  return (
+                    <option key={d.uf} value={d.uf}>{d.name}</option>
+                  )
+                })
+              }
+            </select>
+          </div>
           <div className="cep">
-
             <div>
               <label htmlFor="city" >CEP</label>
               <InputMask
@@ -176,51 +179,60 @@ const Register = () => {
             </div>
             <button className="cep-btn" onClick={handleSearchCity}>Pesquisar</button>
           </div>
-          <label htmlFor="city">Cidade</label>
-          <input type="text" id="city" {...register("city", { required: "Campo obrigatório" })} defaultValue={city} />
-          <label htmlFor="refs-playlist">Playlist de referência Spotify</label>
-          <input
-            type="text"
-            id="refs-playlist"
-            {...register("refsPlaylist", { 
-              required: true,
-              pattern: playlistRegex
-            })}
-          />
-           {errors.refsPlaylist && <span className='form-error'>Playlist inválida</span>}
-          <label htmlFor="instruments">Instrumentos que você toca</label>
-          <Controller
-            control={control}
-            name={'instruments'}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                options={options}
-                value={options.find((o, index) => o.value === `${value}.${index}`)}
-                onChange={onChange}
-                isMulti
-                className='basic-multi-select'
-                classNamePrefix='select'
-              />
-            )}
+          <div className='register-form-item'>
+            <label htmlFor="city">Cidade</label>
+            <input type="text" id="city" {...register("city", { required: "Campo obrigatório" })} defaultValue={city} />
+          </div>
+          <div className='register-form-item'>
+            <label htmlFor="refs-playlist">Playlist de referência Spotify</label>
+            <input
+              type="text"
+              id="refs-playlist"
+              {...register("refsPlaylist", {
+                required: true,
+                pattern: playlistRegex
+              })}
+            />
+            {errors.refsPlaylist && <span className='form-error'>Playlist inválida</span>}
+          </div>
+          <div className='register-form-item'>
+            <label htmlFor="instruments">Instrumentos que você toca</label>
+            <Controller
+              control={control}
+              name={'instruments'}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  options={options}
+                  value={options.find((o, index) => o.value === `${value}.${index}`)}
+                  onChange={onChange}
+                  isMulti
+                  className='basic-multi-select'
+                  classNamePrefix='select'
+                />
+              )}
+            />
+          </div>
+          <div className='register-form-item'>
+            <label htmlFor="phone">Whatsapp</label>
+            <Controller
+              control={control}
+              name="phone"
+              defaultValue=''
+              render={({ field: { onChange, onBlur, value } }) => (
+                <InputMask
+                  mask="(99) 99999-9999"
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
 
-          />
-          <label htmlFor="phone">Whatsapp</label>
-          <Controller
-            control={control}
-            name="phone"
-            defaultValue=''
-            render={({ field: { onChange, onBlur, value } }) => (
-              <InputMask
-                mask="(99) 99999-9999"
-                onBlur={onBlur}
-                onChange={onChange}
-                value={value}
-              />
-            )}
-
-          />
-          <label htmlFor="about-you">Fale um pouco sobre você</label>
-          <textarea id="about-you" cols={30} rows={10} {...register("about", { required: "Campo obrigatório" })} />
+            />
+          </div>
+          <div className='register-form-item'>
+            <label htmlFor="about-you">Fale um pouco sobre você</label>
+            <textarea id="about-you" cols={30} rows={10} {...register("about", { required: "Campo obrigatório" })} />
+          </div>
           <div className="center-btn">
             <button type='submit' className='register-btn' >Enviar</button>
           </div>

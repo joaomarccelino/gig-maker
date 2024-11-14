@@ -11,6 +11,7 @@ import BandRegister from './pages/BandRegister';
 import { AuthContextProvider } from './hook/AuthContext';
 import MyGigs from './pages/MyGigs';
 import SearchPage from './pages/SearchPage';
+import BandLandingPage from './pages/BandLandingPage';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function App() {
             <Route path='/search/:searchTerm' element={<SearchPage />} />
             <Route path='/user/:id' element={<UserProfile />} />
             <Route path='/banda/:id' element={<BandProfile />} />
+            <Route path='/page/banda/:id' element={<BandLandingPage />} />
             <Route path='registro-banda' element={<BandRegister />} />
             <Route path='minhas-gigs' element={<MyGigs/>} />
             <Route path='meus-anuncios' />

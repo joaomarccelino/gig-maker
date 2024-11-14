@@ -7,6 +7,7 @@
   background-color: var(--g12);
   padding: 20px 40px;
   border-radius: 4px;
+  position: relative;
 }
 
 .header input {
@@ -61,4 +62,25 @@
   .mobile-nav-menu {
     display: block;
   }
+}
+
+@media (max-width: 670px) {
+  .header-logo {
+    width: 60%;
+  }
+  .icons-nav-menu {
+    display: none;
+  }
+  .mobile-nav-menu {
+    display: block;
+  }
+  .header {
+    justify-content: center;
+    gap: 20px;
+  }
+  .header-input,
+  .mobile-nav-menu {
+    flex: 1;
+  }
+  
 }

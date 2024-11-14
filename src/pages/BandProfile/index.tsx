@@ -30,9 +30,6 @@ const BandProfile = () => {
           </div>
           <h1>{band?.name}</h1>
           <div className="band-menu">
-            <button className="icon-btn follow-btn">
-              SEGUIR
-            </button>
             <button className="icon-btn">
               <BiMessage color="var(--p1)" size={30} />
             </button>

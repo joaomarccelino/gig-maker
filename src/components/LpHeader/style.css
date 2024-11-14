@@ -1,0 +1,72 @@
+.lp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  margin-bottom: 40px;
+  background-color: var(--g12);
+  padding: 20px 40px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.band-logo {
+  font: 700 2rem/1.1 "Gugi", sans-serif;
+  color: var(--p1);
+  text-transform: lowercase;
+}
+
+.lp-nav {
+  position: relative;
+  font-family: "Poppins", sans-serif;
+}
+
+.lp-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.lp-nav-menu-item {
+  color: var(--g1);
+  font-weight: 700;
+}
+
+.midia-kit-btn {
+  color: var(--ora);
+  font-weight: 700;
+}
+
+.lp-mobile-nav-menu {
+  position: absolute;
+  top: 55px;
+  left: -200px; 
+  background-color: var(--g10);
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.icon-btn.mobile-btn {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .lp-nav-menu {
+    display: none;
+  }
+  .icon-btn.mobile-btn {
+    display: initial;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-logo {
+    width: 50%;
+  }
+}
