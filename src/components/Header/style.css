@@ -29,10 +29,11 @@
   display: none;
   position: relative;
 }
+
 .icons-nav-menu-mobile {
   position: absolute;
   top: 55px;
-  left: -200px; 
+  left: -200px;
   background-color: var(--g10);
   border: 1px solid #ccc;
   padding: 20px;
@@ -43,7 +44,8 @@
   transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
-.icons-nav-menu-mobile a, .icons-nav-menu-mobile button {
+.icons-nav-menu-mobile a,
+.icons-nav-menu-mobile button {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -56,9 +58,11 @@
   .header-logo {
     width: 80%;
   }
+
   .icons-nav-menu {
     display: none;
   }
+
   .mobile-nav-menu {
     display: block;
   }
@@ -68,19 +72,34 @@
   .header-logo {
     width: 60%;
   }
+
   .icons-nav-menu {
     display: none;
   }
+
   .mobile-nav-menu {
     display: block;
   }
+
   .header {
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
   }
+
   .header-input,
   .mobile-nav-menu {
     flex: 1;
   }
-  
+
+}
+
+@media (max-width: 500px) {
+  .header img {
+    width: 100px;
+  }
+
+  .header input {
+    padding: 4px 4px 4px 8px;
+    font-size: 0.875rem;
+  }
 }

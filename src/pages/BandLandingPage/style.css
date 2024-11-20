@@ -12,7 +12,7 @@
   width: 50%;
 }
 
-.about-lp-text h1{
+.about-lp-text h1 {
   text-transform: uppercase;
   color: var(--g1);
   font: 700 2rem/1.1 "Poppins", sans-serif;
@@ -54,16 +54,36 @@
   .about-lp {
     flex-direction: column-reverse;
   }
-  
-.about-lp-text{
-  align-items: center;
-  margin-top: 40px;
-  width: 100%;
-}
+
+  .about-lp-text {
+    align-items: center;
+    margin-top: 40px;
+    width: 100%;
+  }
 }
 
 @media (max-width: 800px) {
   .lp-rep-refs {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 500px) {
+  .about-lp {
+    margin-bottom: 40px;
+  }
+
+  .about-lp-text {
+    gap: 20px;
+  }
+
+  .band-lp-setlist-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .lp-rep-refs {
+    gap: 10px;
+  }
+  
 }

@@ -21,13 +21,13 @@ const LpHeader = ({bandName}: LpHeaderProps) => {
         <a href="/home">
           <span className='band-logo'>{bandName}</span>
         </a>
-        <nav className='nav'>
-        <ul className='nav-menu'>
+        <nav className='lp-nav'>
+        <ul className='lp-nav-menu'>
           <li>
-            <a className='nav-menu-item' href="#about">Sobre</a>
+            <a className='lp-nav-menu-item' href="#about">Sobre</a>
           </li>
           <li>
-            <a className='nav-menu-item' href="#setlist">Repertório</a>
+            <a className='lp-nav-menu-item' href="#setlist">Repertório</a>
           </li>
         </ul>
         <button className='icon-btn mobile-btn' onClick={handleShowMobileMenu}>
@@ -41,12 +41,12 @@ const LpHeader = ({bandName}: LpHeaderProps) => {
         {
           showMobileMenu
           &&
-          <ul className='mobile-nav-menu'>
+          <ul className='lp-mobile-nav-menu'>
             <li>
-              <a className='nav-menu-item' href="#about">Sobre</a>
+              <a className='lp-nav-menu-item' href="#about">Sobre</a>
             </li>
             <li>
-              <a className='nav-menu-item' href="#setlist">Repertório</a>
+              <a className='lp-nav-menu-item' href="#setlist">Repertório</a>
             </li>
           </ul>
         }

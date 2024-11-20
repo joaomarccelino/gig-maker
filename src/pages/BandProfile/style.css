@@ -70,33 +70,7 @@
   color: var(--g2);
   margin-bottom: 20px;
 }
-
-.instruments-area {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
-.band-btn-area {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 40px;
-}
-
-.band-btn {
-  background-color: var(--g10);
-  border: none;
-  padding: 10px;
-  width: 160px;
-  border-radius: 8px;
-  font: 700 1.25rem/1.1 "Poppins", sans-serif;
-  text-transform: uppercase;
-  color: var(--g2);
-  cursor: pointer;
-}
-
+ 
 .band-btn.active {
   background-color: var(--p1);
 }
@@ -118,6 +92,17 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
+}
+
+.band-feed-title {
+  background-color: var(--g10);
+  padding: 10px;
+  width: 160px;
+  border-radius: 8px;
+  font: 700 1.25rem/1.1 "Poppins", sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--g2);
 }
 
 @media (max-width: 800px) {
@@ -142,7 +127,47 @@
     grid-template-columns: 1fr;
     margin-bottom: 40px;
   }
+
   .band-prof-photo {
     max-width: 340px;
+  }
+}
+
+@media (max-width: 500px) {
+  .band-info {
+    margin-bottom: 20px;
+  }
+
+  .band-cover-photo {
+    width: 100%;
+    height: 300px;
+  }
+
+  .band-prof-photo {
+    max-width: 200px;
+    height: 200px;
+    border: 2px solid var(--g12);
+    border-radius: 40px;
+    object-fit: cover;
+  }
+
+  .band-info h1 {
+    font-size: 1.5rem;
+  }
+
+  .band-instruments,
+  .band-references {
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+
+  .band-instruments h2,
+  .band-references h2 {
+    font-size: 1.25rem;
+  }
+
+  .members-area h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
   }
 }

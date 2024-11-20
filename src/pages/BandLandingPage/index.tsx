@@ -10,8 +10,7 @@ const BandLandingPage = () => {
 
   const { id } = useParams();
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data-lp'],
-    () => handleGetBand(id || '').then(res => { console.log(res); return res }));
-  console.log(band)
+    () => handleGetBand(id || '').then(res => {  return res }));
 
   if (isLoading) return <p>Loading...</p>
 

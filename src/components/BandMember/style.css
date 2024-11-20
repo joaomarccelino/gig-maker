@@ -26,3 +26,11 @@
   justify-content: center;
   gap: 10px;
 }
+
+@media (max-width: 500px) {
+  .band-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }  
+}

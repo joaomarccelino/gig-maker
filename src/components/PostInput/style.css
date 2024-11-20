@@ -54,7 +54,23 @@
   }
 
   .user-thumb {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media (max-width: 500px) {
+  .post-input {
+    padding: 5px 15px 0px 15px;
+    margin-left: 0px;
+    margin-bottom: 40px;
+  }
+  .post-input-user-thumb {
+    margin-left: -10px;
+  }
+  .post-input textarea {
+    height: 150px;
+    font-size: 0.875rem;
   }
 }

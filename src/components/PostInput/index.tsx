@@ -69,9 +69,6 @@ const PostInput = () => {
           <BsImage color='var(--p3)' size={30} />
           <input type="file" accept="image/png, image/jpg, image/jpeg" id="imageInput" onChange={saveImage} />
         </label>
-        <button className='icon-btn' >
-          <BsYoutube color='var(--p3)' size={30} />
-        </button>
       </div>
       <button type='submit' className="register-btn send-btn">Enviar</button>
     </form>

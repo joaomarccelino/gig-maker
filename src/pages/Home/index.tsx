@@ -33,7 +33,6 @@ const Home = () => {
 
   function renderPosts() {
     if (posts) {
-      console.log(posts)
       return <Feed posts={posts} />
     }
   }

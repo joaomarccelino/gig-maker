@@ -5,9 +5,9 @@
   top: 0;
   left: 0;
   z-index: 2000;
-  /* display: none; */
   animation: show-modal-up .8s;
   transition: ease 1s;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .sign-bg.active {
@@ -95,7 +95,7 @@
 }
 
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .sign-modal {
     max-width: 340px;
     height: 30%;
@@ -108,7 +108,7 @@
     font-size: 0.75rem;
     padding: 5px 10px;
   }
-  .sign-modal p {
+  .sign-modal p, .sign-modal p button {
     font-size: 0.75rem;
   }
 

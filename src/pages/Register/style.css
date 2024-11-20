@@ -18,7 +18,7 @@
 }
 
 .register-title {
-  margin-bottom: 120px;
+  margin-bottom: 40px;
 }
 
 .register-subtitle,
@@ -64,7 +64,7 @@
   width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
 }
 
 .register-form-item {
@@ -177,6 +177,7 @@
   .register-title {
     font-size: 1.25rem;
   }
+
   .register-form-item {
     width: 80%;
   }
@@ -187,13 +188,22 @@
     width: 120px;
     height: 120px;
   }
+
   .register-title {
-    font-size: 1rem;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
   }
+
   .register-subtitle {
     font-size: 1.5rem;
   }
+
   .register-form-item {
     width: 60%;
   }
+
+  .profile-pic-btn p {
+    font-size: 0.75rem;
+  }
+  
 }

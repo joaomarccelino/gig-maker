@@ -4,7 +4,6 @@ type ReferencePlaylistProps = {
 
 const ReferencePlaylist = ({playlistLink}: ReferencePlaylistProps) => {
   const playlistURL = playlistLink.replace('https://open.spotify.com/', 'https://open.spotify.com/embed/')
-  console.log(playlistURL)
   return (
     <iframe style={{ borderRadius: '12px' }} 
     src={`${playlistURL}?utm_source=generator&theme=0`}

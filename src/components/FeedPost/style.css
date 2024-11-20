@@ -49,3 +49,29 @@
   border-radius: 8px;
   margin-top: 12px;
 }
+
+@media (max-width: 500px) {
+  .feed-post {
+    padding: 10px 20px;
+    margin-bottom: 40px;
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .post-header h2 {
+    font-size: 0.875rem;
+  }
+  
+  .post-text {
+    font-size: 0.875rem;
+  }
+  
+  .feed-post-input {
+    font-size: 0.875rem;
+    margin-top: 6px;
+  }
+}

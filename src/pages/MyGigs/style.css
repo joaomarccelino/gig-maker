@@ -9,3 +9,13 @@
   text-align: center;
   margin-bottom: 40px;
 }
+
+@media (max-width: 500px) {
+  .gig-list {
+    grid-template-columns: 1fr;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

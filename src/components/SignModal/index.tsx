@@ -38,7 +38,7 @@ const SignModal = ({title, buttonText, onClose}: SignModalProps) => {
     <div className="sign-bg">
       <div className="sign-modal">
         <h2 className="signTitle">{signModalText.title}<span className="highlight">.</span></h2>
-        <button className="sign-modal-btn" onClick={handleLogin} ><span>{signModalText.buttonText} com google</span><ImGoogle2 size={40} /></button>
+        <button className="sign-modal-btn" onClick={handleLogin} ><span>{signModalText.buttonText} google</span><ImGoogle2 size={40} /></button>
         {
           isLogin ? 
           <p>Ainda não tem uma conta? <button onClick={handleLoginToSign} className="text-btn">Cadastre-se já</button></p> :

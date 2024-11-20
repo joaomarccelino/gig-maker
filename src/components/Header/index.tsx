@@ -71,9 +71,6 @@ const Header = ({userId} : HeaderProps) => {
               <a href="/">
                 <BsFillPeopleFill color="var(--g5)" size={30} /> Músicos
               </a>
-              <a href="/">
-                <FaMusic color="var(--g5)" size={30} /> Bandas
-              </a>
               <a href={`/user/${userId}`}>
                 <BsFillPeopleFill color="var(--g5)" size={30} /> Meu Perfil
               </a>

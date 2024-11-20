@@ -20,7 +20,6 @@
 
     const { isLoading, error, data: users } = useQuery(['gig-maker-posts'],
       () => handleGetUsers().then(res => {
-        console.log(res)
         return res
       }));
 
@@ -51,13 +50,11 @@
     };
 
     useEffect(() => {
-      console.log(searchTerm);
     }, [searchTerm]);
 
     const handleSelectMusician = (id: string, name: string) => {
       setUserName(name)
       setSearchTerm(id)
-      console.log(searchTerm)
       setResults([]);
     }
     

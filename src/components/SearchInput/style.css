@@ -1,5 +1,16 @@
 .search-result {
-  background-color: var(--g6);
+  position: absolute;
+  background-color: var(--g4);
+  padding: 12px;
+  z-index: 10; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.search-result button {
+  font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  margin-bottom: 12px;
+  width: 100%;
+  text-align: left;
 }
 
 .member-name {

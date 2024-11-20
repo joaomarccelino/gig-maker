@@ -8,14 +8,14 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { handleGetBand } from "../../services/band";
 import { useAuth } from "../../hook/AuthContext";
+import { AiOutlineWhatsApp } from "react-icons/ai";
 
 
 
 const BandProfile = () => {
   const { id } = useParams();
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data'],
-    () => handleGetBand(id || '').then(res => { console.log(res); return res }));
-  console.log(band)
+    () => handleGetBand(id || '').then(res => { return res }));
   const { user } = useAuth();
   if (isLoading) return <p>Loading...</p>
 
@@ -31,9 +31,9 @@ const BandProfile = () => {
           </div>
           <h1>{band?.name}</h1>
           <div className="band-menu">
-            <button className="icon-btn">
-              <BiMessage color="var(--p1)" size={30} />
-            </button>
+            <a href="https://wa.me/5515991751583?text=Ol%C3%A1%21%20Te%20encontrei%20no%20GIG%20Maker">
+              <AiOutlineWhatsApp color="var(--p1)" size={40} />
+            </a>
           </div>
         </div>
         {
@@ -69,14 +69,7 @@ const BandProfile = () => {
             }
           </div>
         </section>
-        <div className="band-btn-area">
-          <button className="band-btn">
-            Publicações
-          </button>
-          <button className="band-btn">
-            Vídeos
-          </button>
-        </div>
+        <h2 className="band-feed-title">Publicações</h2>
         {/* <Feed posts={feedTest} /> */}
       </main>
     </>

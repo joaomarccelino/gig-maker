@@ -115,7 +115,6 @@ const BandRegister = () => {
 
   }
 
-  console.log(watch())
   return (
     <>
       <Header userId={user?.id || ''} />
@@ -156,7 +155,7 @@ const BandRegister = () => {
           <label htmlFor="about-you">Sobre a banda</label>
           <textarea id="about-you" cols={30} rows={10}  {...register("about", { required: "Campo obrigatório" })} />
           <h2 className='members-title'>Membros da banda</h2>
-          <div>
+          <div className='member-inputs-area'>
             {
               fields.map((field, index) => {
                 return (
@@ -183,8 +182,8 @@ const BandRegister = () => {
               })
             }
           </div>
-          <button className="register-btn" onClick={addNewMember}>Adicionar membro</button>
-          <div className="center-btn">
+          <button className="register-btn band-center-btn" onClick={addNewMember}>Adicionar membro</button>
+          <div className="band-center-btn">
             <button type='submit' className='register-btn'>Criar banda</button>
           </div>
         </form>

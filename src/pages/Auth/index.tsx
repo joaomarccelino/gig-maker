@@ -14,11 +14,6 @@ const Auth = () => {
     setShowSignModal(true);
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate('/home')
-  //   }
-  // }, [user])
 
   return (
     <main className="auth-page">
