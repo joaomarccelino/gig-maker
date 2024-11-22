@@ -26,8 +26,16 @@ const SearchPage = () => {
   const [searchResults, setSearchResults] = useState(searchData);
   const { user } = useAuth();
   useEffect(() => {
-    const filteredResults = searchData?.filter(item =>
-      item.name.toLowerCase().includes(searchWord.toLowerCase()));
+    const filteredResults = searchData?.filter(item => {
+      if ('instruments' in item) {
+        return item.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+          item.city.toLowerCase().includes(searchWord.toLowerCase()) ||
+          item.instruments.some(instrument => 
+            instrument.value.toLowerCase().includes(searchWord.toLowerCase()))           
+      } else {
+        return item.name.toLowerCase().includes(searchWord.toLowerCase()) || item.city.toLowerCase().includes(searchWord.toLowerCase());
+      }
+    })
     filteredResults && setSearchResults(filteredResults)
   }, [searchWord])
 
@@ -39,11 +47,11 @@ const SearchPage = () => {
     <>
       <Header userId={user?.id || ''} />
       <main className="search-page container">
-        <input type="text" value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
+        <input className="search-page-input" placeholder="Procure por nome, banda, cidade ou instrumento" type="text" value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
         {
           searchResults?.map((item) => {
             return (
-              <SearchResultCard id={item.id} name={item.name} profilePic={item.profilePic || ''} type={item.type} />
+              <SearchResultCard id={item.id} name={item.name} profilePic={item.profilePic || ''} type={item.type} instruments={'instruments' in item ? item.instruments : undefined} city={item.city} userCity={user?.city || ''}/>
             )
           })
         }

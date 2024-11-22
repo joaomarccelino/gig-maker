@@ -11,6 +11,8 @@ import { handleBandRegister } from '../../services/band';
 import { useNavigate } from 'react-router-dom';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
 import { useAuth } from '../../hook/AuthContext';
+import InputMask from 'react-input-mask';
+import Webcam from 'react-webcam';
 
 type instrument = {
   value: string;
@@ -30,6 +32,7 @@ type BandRegisterInputs = {
   repPlaylist: string;
   about: string;
   members: Member[];
+  phone: string;
 }
 
 const BandRegister = () => {
@@ -84,10 +87,8 @@ const BandRegister = () => {
   }
 
   const onSubmit: SubmitHandler<BandRegisterInputs> = async (data) => {
-
+    const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
     if (profPic) {
-
-
       const membersData = data.members.map((member, index) => {
         return {
           id: member.id,
@@ -97,13 +98,15 @@ const BandRegister = () => {
 
       const bandData = {
         name: data.name,
+        profilePic: '',
         district: data.district,
         city: data.city,
         refsPlaylist: data.refsPlaylist,
         repPlaylist: data.repPlaylist,
         about: data.about,
         type: 'band',
-        members: membersData
+        members: membersData,
+        phone: phoneWithoutMask
       }
 
       const registerData = {
@@ -115,23 +118,52 @@ const BandRegister = () => {
 
   }
 
+  const videoConstraints = {
+    width: 360,
+    height: 360,
+    facingMode: "user"
+  };
+
   return (
     <>
       <Header userId={user?.id || ''} />
       <main className='container band-register'>
         <h1 className='register-title'>Criar perfil de banda</h1>
-        <div className="profile-pic-area">
+        <div className="profile-pic-area" style={{ backgroundImage: `url(${profPicURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center center", objectFit: "contain", backgroundSize: "cover" }}>
           <div className="profile-pic-btns">
             <div className="profile-pic-btn">
-              <AiOutlineCamera size={35} />
+              <AiOutlineCamera size={35} onClick={() => {
+                if (showWebCam) {
+                  capture();
+                  setShowWebCam(false);
+                } else {
+                  setShowWebCam(true);
+                }
+              }} />
               <p>Tirar foto</p>
             </div>
             <div className="profile-pic-btn">
-              <BiImageAdd size={35} />
-              <p>Escolher arquivo</p>
+              <label htmlFor='imageInput' className='image-input-label'>
+                <BiImageAdd size={35} color="var(--p2)" />
+                <input type="file" accept="image/png, image/jpg, image/jpeg" id="imageInput" onChange={saveImage} />
+                {
+                  profPic ? <p id="imageName">{profPicName}</p> : <p>Escolher arquivo</p>
+                }
+              </label>
             </div>
           </div>
         </div>
+        {
+          showWebCam &&
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            height={360}
+            screenshotFormat="image/jpeg"
+            width={360}
+            videoConstraints={videoConstraints}
+          />
+        }
         <h2 className="register-subtitle">Foto de perfil</h2>
         <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="name">Nome</label>
@@ -148,6 +180,23 @@ const BandRegister = () => {
           </select>
           <label htmlFor="city">Cidade</label>
           <input type="text" id="city"  {...register("city", { required: "Campo obrigatório" })} />
+          <div className='register-form-item'>
+            <label htmlFor="phone">Whatsapp</label>
+            <Controller
+              control={control}
+              name="phone"
+              defaultValue=''
+              render={({ field: { onChange, onBlur, value } }) => (
+                <InputMask
+                  mask="(99) 99999-9999"
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+
+            />
+          </div>
           <label htmlFor="spot-playlist-ref">Playlist de referência Spotify</label>
           <input type="text" id="spot-playlist-ref"  {...register("refsPlaylist", { required: "Campo obrigatório" })} />
           <label htmlFor="spot-playlist-rep">Playlist de repertório Spotify</label>
@@ -182,6 +231,7 @@ const BandRegister = () => {
               })
             }
           </div>
+
           <button className="register-btn band-center-btn" onClick={addNewMember}>Adicionar membro</button>
           <div className="band-center-btn">
             <button type='submit' className='register-btn'>Criar banda</button>

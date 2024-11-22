@@ -87,11 +87,47 @@ export const handleGetUser = async (id: string) => {
   }
 }
 
-export const distanceCalculator = async (city1: string, city2: string) => {
+const getCoordinates = async (city: string): Promise<{ lon: number, lat: number }> => {
   const apiKey = process.env.REACT_APP_DISTANCE_KEY;
-  const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${city1}&end=${city2}`;
-  const response = await axios.get(url);
-  const data = response.data;
-  const distance = data.features[0].properties.segments[0].distance;
-  return distance;
-}
+  const url = `https://api.openrouteservice.org/geocode/search?api_key=${apiKey}&text=${encodeURIComponent(city)}`;
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+
+    if (data.features && data.features.length > 0) {
+      const [lon, lat] = data.features[0].geometry.coordinates;
+      return { lon, lat };
+    }
+
+    throw new Error('Não foi possível encontrar as coordenadas para a cidade informada.');
+  } catch (error) {
+    console.error('Erro ao buscar coordenadas:', error);
+    throw error;
+  }
+};
+
+
+
+export const distanceCalculator = async (city1: string, city2: string) => {
+  const startCoords = await getCoordinates(city1);
+  const endCoords = await getCoordinates(city2);
+
+  const apiKey = process.env.REACT_APP_DISTANCE_KEY;
+  const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${startCoords.lon},${startCoords.lat}&end=${endCoords.lon},${endCoords.lat}`;
+
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+
+    if (!data.features || data.features.length === 0) {
+      throw new Error('Resposta da API inválida.');
+    }
+
+    const distance = data.features[0].properties.segments[0].distance; // Distância em metros
+    return (distance / 1000).toFixed(2); // Retorna distância em km
+  } catch (error) {
+    console.error('Erro ao calcular distância:', error);
+    throw new Error('Erro ao calcular distância');
+  }
+};

@@ -19,6 +19,7 @@
 
 .register-title {
   margin-bottom: 40px;
+  text-align: center;
 }
 
 .register-subtitle,
@@ -174,16 +175,20 @@
 }
 
 @media (max-width: 700px) {
+  .register-form {
+    width: 400px;
+  }
   .register-title {
     font-size: 1.25rem;
   }
 
-  .register-form-item {
-    width: 80%;
-  }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 500px) {
+   .register-form {
+    width: 300px;
+  }
+
   .profile-pic-area {
     width: 120px;
     height: 120px;
@@ -196,10 +201,6 @@
 
   .register-subtitle {
     font-size: 1.5rem;
-  }
-
-  .register-form-item {
-    width: 60%;
   }
 
   .profile-pic-btn p {

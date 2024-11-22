@@ -7,27 +7,47 @@ import ReferencePlaylist from "../../components/ReferencePlaylist";
 import Instrument from "../../components/Instrument";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { handleGetUser } from "../../services/user";
+import { distanceCalculator, handleGetUser } from "../../services/user";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../hook/AuthContext";
 
 const UserProfile = () => {
+  const [distance, setDistance] = useState<string | null>(null);
+  const { user } = useAuth();
+
   const { id } = useParams();
-  const { isLoading, error, data: user } = useQuery(['gigmaker-user-data'],
+  const { isLoading, error, data: visitUser } = useQuery(['gigmaker-user-data'],
     () => handleGetUser(id || '').then(res => { return res }));
+  useEffect(() => {
+    const fetchDistance = async () => {
+      if (user?.city && visitUser?.city) {
+        try {
+          const calculatedDistance = await distanceCalculator(user?.city, visitUser?.city);
+          setDistance(calculatedDistance);
+        } catch (error) {
+          console.error('Erro ao calcular a distância:', error);
+          setDistance('Erro ao calcular');
+        }
+      }
+    };
+
+    fetchDistance();
+  }, [user?.city, visitUser?.city]);
   if (isLoading) return <p>Loading...</p>
 
   if (error) return <p>Ocorreu um erro:</p>;
 
-  if (user) {
+  if (visitUser) {
     return (
       <>
-        <Header userId={user?.id || ''} />
+        <Header userId={visitUser?.id || ''} />
         <main className="user-profile container">
           <div className="user-info">
             <div className="user-cover-photo" style={{ backgroundImage: `url(${PostExample})`, backgroundRepeat: "no-repeat" }}>
-              <img src={user.profilePic} alt="" className="user-prof-photo" />
+              <img src={visitUser.profilePic} alt="" className="user-prof-photo" />
             </div>
-            <h1>{user.name}</h1>
-            <span className="user-city">{user.city}</span>
+            <h1>{visitUser.name}</h1>
+            <span className="user-city">{visitUser.city}, {distance}km</span>
             <div className="user-menu">
               <a href="https://wa.me/5515991751583?text=Ol%C3%A1%21%20Te%20encontrei%20no%20GIG%20Maker">
                 <AiOutlineWhatsApp color="var(--p1)" size={40} />
@@ -39,7 +59,7 @@ const UserProfile = () => {
               <h2>Instrumentos</h2>
               <div className="instruments-area">
                 {
-                  user.instruments.map((i) => {
+                  visitUser.instruments.map((i) => {
                     return (
                       <Instrument instrument={i.value} />
                     )
@@ -50,7 +70,7 @@ const UserProfile = () => {
             </div>
             <div className="user-references">
               <h2>Referências</h2>
-              <ReferencePlaylist playlistLink={user.spotRef} />
+              <ReferencePlaylist playlistLink={visitUser.spotRef} />
             </div>
           </div>
           <h1 className="user-btn">Publicações</h1>

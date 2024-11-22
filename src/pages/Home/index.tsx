@@ -7,19 +7,6 @@ import { useAuth } from "../../hook/AuthContext";
 import { useQuery } from "react-query";
 import { handleGetAllPosts } from "../../services/posts";
 
-const teste = [
-  {
-    id: '',
-    userThumb: '',
-    userName: '',
-    userInstruments: '',
-    postPhoto: '',
-    postVideoLink: '',
-    postText: '',
-    postComments: []
-  }
-]
-
 const Home = () => {
   const { user } = useAuth();
   const { isLoading, error, data: posts } = useQuery(['gig-maker-posts'],
