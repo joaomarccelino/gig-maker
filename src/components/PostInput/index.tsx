@@ -59,7 +59,7 @@ const PostInput = () => {
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="post-input">
-      <img src={user?.userThumb} alt="Perfil" className='user-thumb post-input-user-thumb' />
+      <img src={user?.profilePic} alt="Perfil" className='user-thumb post-input-user-thumb' />
       {
         postPic && <img className='post-picture-photo' src={postPicURL} />
       }

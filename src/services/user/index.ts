@@ -31,6 +31,31 @@ export const handleUserRegister = async ({ id, data, image }: UserRegisterProps)
   })
 }
 
+export const handleUserUpdate = async (
+  id: string,
+  updatedData: Partial<UserRegisterProps['data']>,
+  image?: File
+) => {
+  const userRef = doc(firestore, "users", id);
+
+  try {
+    if (image) {
+      const imageRef = storageRef(storage, `${id}/${image.name}`);
+      const snapshot = await uploadBytes(imageRef, image);
+      const imageUrl = await getDownloadURL(snapshot.ref);
+      updatedData.profilePic = imageUrl;
+      updatedData.userThumb = imageUrl;
+    }
+
+    await updateDoc(userRef, updatedData);
+    alert("Dados do usuário atualizados com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar os dados do usuário:", error);
+    alert("Erro ao atualizar os dados do usuário.");
+  }
+};
+
+
 export const handleGetUsers = async () => {
   const dbRef = collection(firestore, "users");
   try {
@@ -68,7 +93,7 @@ export const handleGetUser = async (id: string) => {
     if (docSnap.exists()) {
       const data = docSnap.data();
       userData = {
-        id: data.uid,
+        id: data.id,
         about: data.about,
         city: data.city,
         coverPic: data.coverPic,
@@ -76,6 +101,7 @@ export const handleGetUser = async (id: string) => {
         instruments: data.instruments,
         name: data.name,
         profilePic: data.profilePic,
+        phone: data.phone,
         spotRef: data.spotRef,
         type: data.type,
         userThumb: data.userThumb

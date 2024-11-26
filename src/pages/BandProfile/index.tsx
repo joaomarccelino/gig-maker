@@ -27,7 +27,7 @@ const BandProfile = () => {
       <main className="band-profile container">
         <div className="band-info">
           <div className="band-cover-photo" style={{ backgroundImage: `url(${BandProfileTest})`, backgroundRepeat: "no-repeat" }}>
-            <img src={BandProfileTest} alt="" className="band-prof-photo" />
+            <img src={band?.profilePic} alt="" className="user-prof-photo" />
           </div>
           <h1>{band?.name}</h1>
           <div className="band-menu">

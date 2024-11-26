@@ -10,7 +10,7 @@ const BandLandingPage = () => {
 
   const { id } = useParams();
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data-lp'],
-    () => handleGetBand(id || '').then(res => {  return res }));
+    () => handleGetBand(id || '').then(res => { return res }));
 
   if (isLoading) return <p>Loading...</p>
 
@@ -19,17 +19,17 @@ const BandLandingPage = () => {
 
   return (
     <div>
-      <LpHeader bandName={band?.name}/>
+      <LpHeader bandName={band?.name} />
       <section className="container about-lp" id='about'>
         <div className="about-lp-text">
           <h1>A banda</h1>
           <p>{band?.about}</p>
-          <button className="sign-btn">
+          <a href="https://wa.me/5515991751583?text=Ol%C3%A1%21%20Te%20encontrei%20no%20GIG%20Maker" className="sign-btn">
             FAÇA UM ORÇAMENTO
-          </button>
+          </a >
         </div>
         <div className='about-lp-img'>
-          <img src={BandProfileTest} alt="" />
+          <img src={band?.profilePic} alt="" />
         </div>
       </section>
       <section className="container">

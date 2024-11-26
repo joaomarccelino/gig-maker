@@ -11,8 +11,9 @@
 
 
 
-  interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> { }
-
+  interface SearchInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onSelect'> {
+    onUserSelect: (user: SearchResult) => void;
+  }
   const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>((props, ref) => {
     const [userName, setUserName] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -53,10 +54,10 @@
     }, [searchTerm]);
 
     const handleSelectMusician = (id: string, name: string) => {
-      setUserName(name)
-      setSearchTerm(id)
-      setResults([]);
-    }
+      props.onUserSelect({ id, name });
+      setSearchTerm(name); 
+      setResults([]); 
+    };
     
     if (isLoading) return <p>Loading...</p>
 

@@ -7,12 +7,13 @@ import Header from '../../components/Header';
 import { brDistricts, instruments } from '../../utils/commonData';
 import './style.css';
 import SearchInput from '../../components/SearchInput';
-import { handleBandRegister } from '../../services/band';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
 import { useAuth } from '../../hook/AuthContext';
 import InputMask from 'react-input-mask';
 import Webcam from 'react-webcam';
+import { handleBandUpdate, handleGetBand } from '../../services/band';
+import { useQuery } from 'react-query';
 
 type instrument = {
   value: string;
@@ -25,7 +26,7 @@ type Member = {
   instruments: instrument[]
 }
 
-type BandRegisterInputs = {
+type BandUpdateInputs = {
   name: string;
   district: string;
   city: string;
@@ -36,22 +37,43 @@ type BandRegisterInputs = {
   phone: string;
 }
 
-const BandRegister = () => {
-  const [profPic, setProfPic] = useState<File>()
+const EditBandData = () => {
+  const [profPic, setProfPic] = useState<File>();
   const [imgSrc, setImgSrc] = useState<any>(null);
   const [showWebCam, setShowWebCam] = useState<boolean>(false);
-  const [profPicURL, setProfPicURL] = useState<string>();
   const [profPicName, setProfPicName] = useState<string>();
   const { user } = useAuth();
-  function saveImage(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) {
-      setProfPic(e.target.files[0])
-      setProfPicName(e.target.files[0].name);
-      setProfPicURL(URL.createObjectURL(e.target.files[0]))
-    }
-  }
+  const { bandId } = useParams();
 
   const webcamRef = useRef<any>(null);
+
+  const { isLoading, error, data: band } = useQuery(
+    ['gigmaker-band-data'],
+    () => handleGetBand(bandId || '').then(res => res),
+    {
+      enabled: !!bandId,
+    }
+  );
+  const [profPicURL, setProfPicURL] = useState<string>(band?.profilePic || '');
+
+  const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control, setValue } = useForm<BandUpdateInputs>();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (band) {
+      reset({
+        name: band.name || '',
+        district: band.district || '',
+        city: band.city || '',
+        refsPlaylist: band.refsPlaylist || '',
+        repPlaylist: band.repPlaylist || '',
+        about: band.about || '',
+        members: band.members || [],
+        phone: band.phone || '',
+      });
+    }
+  }, [band, reset]);
 
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -59,43 +81,31 @@ const BandRegister = () => {
     setProfPic(image);
     setProfPicName(image.name);
     setProfPicURL(imageSrc);
-  }, [webcamRef, setImgSrc]);
-  const [fields, setFields] = useState([0])
+  }, [webcamRef]);
 
-  const options = instruments.map((i) => {
-    return {
-      value: i,
-      label: i
+  const [fields, setFields] = useState([0]);
+
+  const options = instruments.map((i) => ({
+    value: i,
+    label: i
+  }));
+
+  function saveImage(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      setProfPic(e.target.files[0]);
+      setProfPicName(e.target.files[0].name);
+      setProfPicURL(URL.createObjectURL(e.target.files[0]));
     }
-  })
-
-
-  const navigate = useNavigate();
-
-  const { register, handleSubmit, watch, formState: { errors }, reset, unregister, control, setValue } = useForm<BandRegisterInputs>()
-
-  function addNewMember() {
-    setFields([...fields, fields.length])
   }
 
-  function removeMember(index: number) {
-    const newFields = [...fields]
-    newFields.splice(index, 1);
-    unregister(`members.${index}`, {
-      keepValue: false
-    });
-    setFields(newFields);
-  }
-
-  const onSubmit: SubmitHandler<BandRegisterInputs> = async (data) => {
+  const onSubmit: SubmitHandler<BandUpdateInputs> = async (data) => {
     const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
+    console.log(data)
     if (profPic) {
-      const membersData = data.members.map((member, index) => {
-        return {
-          id: member.id,
-          instruments: member.instruments
-        }
-      })
+      const membersData = data.members.map((member) => ({
+        id: member.id,
+        instruments: member.instruments,
+      }));
 
       const bandData = {
         owner: user?.id || '',
@@ -108,17 +118,17 @@ const BandRegister = () => {
         about: data.about,
         type: 'band',
         members: membersData,
-        phone: phoneWithoutMask
-      }
+        phone: phoneWithoutMask,
+      };
 
-      const registerData = {
-        data: bandData, image: profPic
+      try {
+        await handleBandUpdate(bandId || '', bandData, profPic);
+        navigate("/minhas-gigs");
+      } catch (error) {
+        console.error("Erro ao atualizar os dados:", error);
       }
-
-      handleBandRegister(registerData).then(() => navigate('/home'));
     }
-
-  }
+  };
 
   const videoConstraints = {
     width: 360,
@@ -130,7 +140,7 @@ const BandRegister = () => {
     <>
       <Header userId={user?.id || ''} />
       <main className='container band-register'>
-        <h1 className='register-title'>Criar perfil de banda</h1>
+        <h1 className='register-title'>Atualizar perfil da banda</h1>
         <div className="profile-pic-area" style={{ backgroundImage: `url(${profPicURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "center center", objectFit: "contain", backgroundSize: "cover" }}>
           <div className="profile-pic-btns">
             <div className="profile-pic-btn">
@@ -171,17 +181,13 @@ const BandRegister = () => {
           <label htmlFor="name">Nome</label>
           <input type="text" id="name" {...register("name", { required: "Campo obrigatório" })} />
           <label htmlFor="district">Estado</label>
-          <select id="district"  {...register("district", { required: "Campo obrigatório" })}>
-            {
-              brDistricts.map((d) => {
-                return (
-                  <option value={d.uf}>{d.name}</option>
-                )
-              })
-            }
+          <select id="district" {...register("district", { required: "Campo obrigatório" })}>
+            {brDistricts.map((d) => (
+              <option key={d.uf} value={d.uf}>{d.name}</option>
+            ))}
           </select>
           <label htmlFor="city">Cidade</label>
-          <input type="text" id="city"  {...register("city", { required: "Campo obrigatório" })} />
+          <input type="text" id="city" {...register("city", { required: "Campo obrigatório" })} />
           <div className='register-form-item'>
             <label htmlFor="phone">Whatsapp</label>
             <Controller
@@ -196,62 +202,19 @@ const BandRegister = () => {
                   value={value}
                 />
               )}
-
             />
           </div>
           <label htmlFor="spot-playlist-ref">Playlist de referência Spotify</label>
-          <input type="text" id="spot-playlist-ref"  {...register("refsPlaylist", { required: "Campo obrigatório" })} />
+          <input type="text" id="spot-playlist-ref" {...register("refsPlaylist", { required: "Campo obrigatório" })} />
           <label htmlFor="spot-playlist-rep">Playlist de repertório Spotify</label>
-          <input type="text" id="spot-playlist-rep"  {...register("repPlaylist", { required: "Campo obrigatório" })} />
+          <input type="text" id="spot-playlist-rep" {...register("repPlaylist", { required: "Campo obrigatório" })} />
           <label htmlFor="about-you">Sobre a banda</label>
-          <textarea id="about-you" cols={30} rows={10}  {...register("about", { required: "Campo obrigatório" })} />
-          <h2 className='members-title'>Membros da banda</h2>
-          <div className='member-inputs-area'>
-            {
-              fields.map((field, index) => (
-                <div key={field + index} className="member-inputs">
-                  <SearchInput
-                    type="text"
-                    onUserSelect={(selectedUser) => {
-                      setValue(`members.${index}.id`, selectedUser.id, { shouldValidate: true });
-                      setValue(`members.${index}.name`, selectedUser.name, { shouldValidate: true });
-                    }}
-                    {...register(`members.${index}.name`, { required: "Campo obrigatório" })}
-                  />
-                  <label htmlFor={`instruments-${index}`}>Instrumentos</label>
-                  <Controller
-                    control={control}
-                    name={`members.${index}.instruments`}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        options={options}
-                        value={value}
-                        onChange={onChange}
-                        isMulti
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                      />
-                    )}
-                  />
-                  <button
-                    className="unregister-btn"
-                    onClick={() => removeMember(index)}
-                  >
-                    Remover membro
-                  </button>
-                </div>
-              ))
-            }
-          </div>
-          <button className="register-btn band-center-btn" onClick={addNewMember}>Adicionar membro</button>
-          <div className="band-center-btn">
-            <button type='submit' className='register-btn'>Criar banda</button>
-          </div>
+          <textarea id="about-you" cols={30} rows={10} {...register("about", { required: "Campo obrigatório" })} />
+          <button type="submit" className="sign-btn">Atualizar</button>
         </form>
-
       </main>
     </>
-  )
-}
+  );
+};
 
-export default BandRegister;
+export default EditBandData;

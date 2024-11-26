@@ -11,7 +11,7 @@ type Comments = {
 export interface FeedPostProps {
   id: string;
   authorId: string;
-  userThumb: string;
+  profilePic: string;
   userName: string;
   userInstruments: string;
   postPhoto?: string;
@@ -20,12 +20,12 @@ export interface FeedPostProps {
   postComments: Comments[];
 }
 
-const FeedPost = ({ id, authorId, userThumb, userName, userInstruments, postPhoto, postText, postComments }: FeedPostProps) => {
+const FeedPost = ({ id, authorId, profilePic, userName, userInstruments, postPhoto, postText, postComments }: FeedPostProps) => {
   return (
     <div className="feed-post">
       <div className="post-header">
         <a href={`/user/${authorId}`}>
-          <img src={userThumb} alt={userName} className="user-thumb" />
+          <img src={profilePic} alt={userName} className="user-thumb" />
         </a>
         <a href={`/user/${authorId}`}>
           <h2>{userName}</h2>

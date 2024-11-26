@@ -42,7 +42,7 @@ const SideMenu = ({ userId }: SideMenuProps) => {
           </a>
         </li>
         <li className='side-menu-item'>
-          <a href="/">
+          <a href={`/user/editar/${userId}`}>
             <AiOutlineTool size={iconSize} color="var(--g6)" />
             <p className='side-menu-text'>Configurações</p>
           </a>

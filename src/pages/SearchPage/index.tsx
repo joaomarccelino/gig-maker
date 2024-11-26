@@ -37,7 +37,7 @@ const SearchPage = () => {
       }
     })
     filteredResults && setSearchResults(filteredResults)
-  }, [searchWord])
+  }, [searchWord, searchData])
 
   if (isLoading) return <p>Loading...</p>
 

@@ -16,7 +16,7 @@ type BandMemberProps = {
 const BandMember = ({memberId, name, instruments, memberPicture}: BandMemberProps) => {
   return (
     <div className='band-member'>
-      <img src={memberPicture} alt={name} />
+      <a href={`/user/${memberId}`}><img src={memberPicture} alt={name} /></a>
       <a href={`/user/${memberId}`}>{name}</a>
       <div className="member-instruments">
         {instruments.map((i) => {

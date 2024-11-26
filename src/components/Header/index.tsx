@@ -8,6 +8,7 @@ import './style.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hook/AuthContext';
+import { AiOutlineTool } from 'react-icons/ai';
 
 type HeaderProps = {
   userId: string;
@@ -76,6 +77,9 @@ const Header = ({userId} : HeaderProps) => {
               </a>
               <a href={"/minhas-gigs"}>
                 <BsFillPeopleFill color="var(--g5)" size={30} /> Minhas Gigs
+              </a>
+              <a href={`/user/editar/${userId}`}>
+              <AiOutlineTool size={30} color="var(--g5)" /> Configurações
               </a>
               <button onClick={handleLogout} className='icon-btn'>
                 <IoIosLogOut color="red" size={30} /> Sair

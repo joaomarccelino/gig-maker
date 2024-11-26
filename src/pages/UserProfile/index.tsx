@@ -10,14 +10,29 @@ import { useQuery } from "react-query";
 import { distanceCalculator, handleGetUser } from "../../services/user";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hook/AuthContext";
+import { handleGetUserPosts } from "../../services/posts";
+import Feed from "../../components/Feed";
 
 const UserProfile = () => {
   const [distance, setDistance] = useState<string | null>(null);
   const { user } = useAuth();
-
   const { id } = useParams();
-  const { isLoading, error, data: visitUser } = useQuery(['gigmaker-user-data'],
-    () => handleGetUser(id || '').then(res => { return res }));
+
+  const { isLoading, error, data: visitUser } = useQuery(
+    ['gigmaker-user-data'],
+    () => handleGetUser(id || '').then(res => res)
+  );
+
+  const { isLoading: isPostsLoading, error: postsError, data: posts } = useQuery(
+    ['gig-maker-user-posts', visitUser?.id],
+    () => visitUser?.id ? handleGetUserPosts(visitUser.id) : [],
+    {
+      enabled: !!visitUser?.id, 
+    }
+  );
+
+
+
   useEffect(() => {
     const fetchDistance = async () => {
       if (user?.city && visitUser?.city) {
@@ -33,9 +48,26 @@ const UserProfile = () => {
 
     fetchDistance();
   }, [user?.city, visitUser?.city]);
-  if (isLoading) return <p>Loading...</p>
 
-  if (error) return <p>Ocorreu um erro:</p>;
+  const renderPosts = () => {
+    if (isPostsLoading) {
+      return <p>Carregando publicações...</p>;
+    }
+
+    if (postsError) {
+      return <p>Ocorreu um erro ao carregar as publicações.</p>;
+    }
+
+    if (posts && posts.length > 0) {
+      return <Feed posts={posts} />;
+    } else {
+      return <p>Não há publicações para exibir.</p>;
+    }
+  };
+
+  if (isLoading) return <p>Carregando perfil...</p>;
+
+  if (error) return <p>Ocorreu um erro ao carregar o perfil.</p>;
 
   if (visitUser) {
     return (
@@ -58,15 +90,10 @@ const UserProfile = () => {
             <div className="user-instruments">
               <h2>Instrumentos</h2>
               <div className="instruments-area">
-                {
-                  visitUser.instruments.map((i) => {
-                    return (
-                      <Instrument instrument={i.value} />
-                    )
-                  })
-                }
+                {visitUser.instruments.map((i, index) => (
+                  <Instrument key={index} instrument={i.value} />
+                ))}
               </div>
-
             </div>
             <div className="user-references">
               <h2>Referências</h2>
@@ -74,16 +101,13 @@ const UserProfile = () => {
             </div>
           </div>
           <h1 className="user-btn">Publicações</h1>
-          {/* <Feed posts={feedTest} /> */}
+          {renderPosts()}
         </main>
       </>
-    )
-
+    );
   } else {
-    return <h1>Algo deu errado</h1>
+    return <h1>Algo deu errado ao carregar os dados do usuário.</h1>;
   }
-
-
-}
+};
 
 export default UserProfile;

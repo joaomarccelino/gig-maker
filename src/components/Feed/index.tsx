@@ -9,7 +9,7 @@ type FeedProps = {
 const Feed = ({posts}: FeedProps) => {
   return <div className="feed">
     {posts.map(post => {
-      return <FeedPost key={post.id} id={post.id} authorId={post.authorId} userThumb={post.userThumb} userName={post.userName} userInstruments={post.userInstruments} postPhoto={post.postPhoto} postText={post.postText} postComments={post.postComments} />;
+      return <FeedPost key={post.id} id={post.id} authorId={post.authorId} profilePic={post.profilePic} userName={post.userName} userInstruments={post.userInstruments} postPhoto={post.postPhoto} postText={post.postText} postComments={post.postComments} />;
     })}
   </div>;
 }

@@ -48,7 +48,7 @@ export const handleGetAllPosts = async () : Promise<FeedPostProps[]> => {
       postPhoto: postData.postPhoto,
       postText: postData.postText,
       postComments: postData.postComments,
-      userThumb: userData.userThumb,
+      profilePic: userData.profilePic,
       userName: userData.name,
       userInstruments: userInstruments.join(),
     }
@@ -57,10 +57,11 @@ export const handleGetAllPosts = async () : Promise<FeedPostProps[]> => {
   return postsData;
 }
 
-export const handleGetUserPosts = async (id: string) : Promise<FeedPostProps[]> => {
+export const handleGetUserPosts = async (id: string): Promise<FeedPostProps[]> => {
+  console.log('Fetching posts for user:', id); 
   const postsRef = collection(firestore, "posts");
   const postsSnapshot = await getDocs(postsRef);
-  const postsData : FeedPostProps[] = await Promise.all(postsSnapshot.docs.map(async (postDoc) => {
+  const postsData: FeedPostProps[] = await Promise.all(postsSnapshot.docs.map(async (postDoc) => {
     const postData = postDoc.data();
     const userData = await handleGetUser(postData.userId);
     const userInstruments = userData.instruments.map(i => i.value);
@@ -70,11 +71,13 @@ export const handleGetUserPosts = async (id: string) : Promise<FeedPostProps[]> 
       postPhoto: postData.postPhoto,
       postText: postData.postText,
       postComments: postData.postComments,
-      userThumb: userData.userThumb,
+      profilePic: userData.profilePic,
       userName: userData.name,
       userInstruments: userInstruments.join(),
-    }
+    };
     return postResult;
-  }))
+  }));
+
+  console.log('Posts retornados:', postsData); 
   return postsData;
-}
+};

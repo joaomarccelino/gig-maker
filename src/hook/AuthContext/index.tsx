@@ -38,6 +38,7 @@ export type User = {
   spotRef: string;
   instruments: Instrument[];
   about: string;
+  phone: string;
   type: string;
 };
 
@@ -52,6 +53,7 @@ export type Band = {
   about: string;
   members: Member[];
   type: string;
+  owner: string;
 };
 
 type instrument = {
@@ -104,6 +106,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
           spotRef: data.spotRef,
           instruments: data.instruments,
           about: data.about,
+          phone: data.phone,
           type: data.type
         };
         setUser(userData);
