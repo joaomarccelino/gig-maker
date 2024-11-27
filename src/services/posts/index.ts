@@ -58,7 +58,6 @@ export const handleGetAllPosts = async () : Promise<FeedPostProps[]> => {
 }
 
 export const handleGetUserPosts = async (id: string): Promise<FeedPostProps[]> => {
-  console.log('Fetching posts for user:', id); 
   const postsRef = collection(firestore, "posts");
   const postsSnapshot = await getDocs(postsRef);
   const postsData: FeedPostProps[] = await Promise.all(postsSnapshot.docs.map(async (postDoc) => {
@@ -77,7 +76,5 @@ export const handleGetUserPosts = async (id: string): Promise<FeedPostProps[]> =
     };
     return postResult;
   }));
-
-  console.log('Posts retornados:', postsData); 
   return postsData;
 };
