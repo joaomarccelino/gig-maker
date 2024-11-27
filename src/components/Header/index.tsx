@@ -46,7 +46,7 @@ const Header = ({userId} : HeaderProps) => {
           onKeyDown={handleSearch}
         />
         <div className="icons-nav-menu">
-          <a href="/">
+          <a href="/minhas-gigs">
             <BsFillPeopleFill color="var(--g5)" size={30} />
           </a>
           <a href="/">

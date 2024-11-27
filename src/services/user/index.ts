@@ -113,6 +113,17 @@ export const handleGetUser = async (id: string) => {
   }
 }
 
+export const getUserById = async (userId: string): Promise<{ name: string; profilePic?: string }> => {
+  const userRef = doc(firestore, "users", userId);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+    return userSnap.data() as { name: string; profilePic?: string };
+  } else {
+    throw new Error("Usuário não encontrado");
+  }
+};
+
 const getCoordinates = async (city: string): Promise<{ lon: number, lat: number }> => {
   const apiKey = process.env.REACT_APP_DISTANCE_KEY;
   const url = `https://api.openrouteservice.org/geocode/search?api_key=${apiKey}&text=${encodeURIComponent(city)}`;
@@ -132,6 +143,8 @@ const getCoordinates = async (city: string): Promise<{ lon: number, lat: number 
     throw error;
   }
 };
+
+
 
 
 

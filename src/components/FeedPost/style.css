@@ -40,14 +40,43 @@
   color: var(--g10);
 }
 
+.comment-input-btn {
+  display: flex;
+}
+
 .feed-post-input {
   font: 400 1rem/1.1 "Fira Sans", sans-serif;
+  flex: 8;
   color: var(--g12);
   background-color: var(--g4);
   padding: 16px 40px;
   border: none;
+  border-radius: 8px 0px 0px 8px;
+}
+
+.comment-btn {
+  flex: 2;
+  font: 700 1rem/1.1 "Fira Sans", sans-serif;
+  padding: 16px 40px;
+  background-color: var(--p2);
+  border: none;
+  border-radius: 0px 8px 8px 0px;
+  cursor: pointer;
+}
+
+.comments-section {
+  font: 400 0.875rem/1.1 "Fira Sans", sans-serif;
+}
+
+.comments-section a {
+  color: var(--g11);
+}
+
+.comments-section li {
+  background-color: var(--g4);
+  padding: 8px 12px;
   border-radius: 8px;
-  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 @media (max-width: 500px) {

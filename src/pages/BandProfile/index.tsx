@@ -1,6 +1,5 @@
 import Header from "../../components/Header";
 import BandProfileTest from '../../assets/imgs/band-profile-test.png';
-import { BiMessage } from 'react-icons/bi';
 import './style.css';
 import ReferencePlaylist from "../../components/ReferencePlaylist";
 import BandMember from "../../components/BandMember";

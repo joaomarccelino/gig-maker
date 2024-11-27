@@ -2,11 +2,9 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { BiImageAdd } from 'react-icons/bi';
-import Select from 'react-select';
 import Header from '../../components/Header';
 import { brDistricts, instruments } from '../../utils/commonData';
 import './style.css';
-import SearchInput from '../../components/SearchInput';
 import { useNavigate, useParams } from 'react-router-dom';
 import { dataURLtoFile } from '../../utils/dataURLtoFile';
 import { useAuth } from '../../hook/AuthContext';
@@ -39,7 +37,6 @@ type BandUpdateInputs = {
 
 const EditBandData = () => {
   const [profPic, setProfPic] = useState<File>();
-  const [imgSrc, setImgSrc] = useState<any>(null);
   const [showWebCam, setShowWebCam] = useState<boolean>(false);
   const [profPicName, setProfPicName] = useState<string>();
   const { user } = useAuth();
@@ -100,7 +97,6 @@ const EditBandData = () => {
 
   const onSubmit: SubmitHandler<BandUpdateInputs> = async (data) => {
     const phoneWithoutMask = data.phone.replace(/[^0-9]/g, '');
-    console.log(data)
     if (profPic) {
       const membersData = data.members.map((member) => ({
         id: member.id,

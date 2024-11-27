@@ -61,7 +61,7 @@ const UserProfile = () => {
     if (posts && posts.length > 0) {
       return <Feed posts={posts} />;
     } else {
-      return <p>Não há publicações para exibir.</p>;
+      return <p className="no-posts">Usuário ainda não publicou</p>;
     }
   };
 

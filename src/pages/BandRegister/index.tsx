@@ -110,12 +110,10 @@ const BandRegister = () => {
         members: membersData,
         phone: phoneWithoutMask
       }
-
       const registerData = {
         data: bandData, image: profPic
       }
-
-      handleBandRegister(registerData).then(() => navigate('/home'));
+      handleBandRegister(registerData).then(() => navigate('/minhas-gigs'));
     }
 
   }

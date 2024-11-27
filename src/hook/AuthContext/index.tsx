@@ -100,7 +100,7 @@ export function AuthContextProvider({ children }: AuthContextProps) {
           name: data.name,
           profilePic: data.profilePic,
           coverPic: data.coverPic,
-          userThumb: data.userThumb,
+          userThumb: data.profilePic,
           district: data.district,
           city: data.city,
           spotRef: data.spotRef,

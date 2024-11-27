@@ -103,6 +103,12 @@
   background-color: var(--p1);
 }
 
+.no-posts {
+  font: 400 1.25rem/1.1 "Fira Sans", sans-serif;
+  color: var(--g2);
+  margin-bottom: 40px;
+}
+
 @media (max-width: 1000px) {
   .user-instruments-refs {
     grid-template-columns: 1fr;

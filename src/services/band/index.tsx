@@ -153,9 +153,7 @@ const deleteImageFromStorage = async (imageUrl: string) => {
     const path = imageUrl.split("?")[0].split("o/")[1];
     const imageRef = storageRef(storage, path);
     await deleteObject(imageRef);
-    console.log("Imagem excluída com sucesso!");
   } catch (error) {
-    console.error("Erro ao excluir a imagem:", error);
   }
 };
 
