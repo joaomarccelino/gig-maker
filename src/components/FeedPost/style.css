@@ -81,7 +81,7 @@
 
 @media (max-width: 500px) {
   .feed-post {
-    padding: 10px 20px;
+    padding: 8px 10px;
     margin-bottom: 40px;
   }
   
@@ -98,9 +98,26 @@
   .post-text {
     font-size: 0.875rem;
   }
+  .comment-input-btn {
+    flex-direction: column;
+  }
   
   .feed-post-input {
     font-size: 0.875rem;
-    margin-top: 6px;
+    border-radius: 8px 8px 0px 0px;
+  }
+  
+  .comment-btn {
+    font-size: 0.875rem;
+    padding: 16px 40px;
+    border-radius: 0px 0px 8px 8px;
+  }
+  
+  
+  .comments-section li {
+    background-color: var(--g4);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
   }
 }
