@@ -1,7 +1,6 @@
 import Header from "../../components/Header";
 import PostExample from '../../assets/imgs/post-example.png';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
-import { HiUserAdd } from 'react-icons/hi';
 import './style.css';
 import ReferencePlaylist from "../../components/ReferencePlaylist";
 import Instrument from "../../components/Instrument";
@@ -66,7 +65,7 @@ const UserProfile = () => {
     }
   };
 
-  if (isLoading) return <p>Carregando perfil...</p>;
+  if (isLoading) return <Loading />;
 
   if (error) return <p>Ocorreu um erro ao carregar o perfil.</p>;
 
