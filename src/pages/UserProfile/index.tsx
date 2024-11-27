@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../hook/AuthContext";
 import { handleGetUserPosts } from "../../services/posts";
 import Feed from "../../components/Feed";
+import Loading from "../../components/Loading";
 
 const UserProfile = () => {
   const [distance, setDistance] = useState<string | null>(null);
@@ -51,7 +52,7 @@ const UserProfile = () => {
 
   const renderPosts = () => {
     if (isPostsLoading) {
-      return <p>Carregando publicações...</p>;
+      return <Loading />;
     }
 
     if (postsError) {

@@ -4,6 +4,7 @@ import './style.css'
 import { useQuery } from "react-query";
 import {handleGetBandsByOwner } from "../../services/band";
 import { useAuth } from "../../hook/AuthContext";
+import Loading from "../../components/Loading";
 const MyGigs = () => {
   const { user } = useAuth();
   const { isLoading, error, data: bands } = useQuery(['gig-maker-owner-bands'],
@@ -11,7 +12,7 @@ const MyGigs = () => {
       return res
     }));
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
 
   if (error) return <p>Ocorreu um erro:</p>;
 

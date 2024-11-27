@@ -5,6 +5,7 @@ import './style.css';
 import { useQuery } from 'react-query';
 import { handleGetBand } from '../../services/band';
 import LpHeader from '../../components/LpHeader';
+import Loading from '../../components/Loading';
 
 const BandLandingPage = () => {
 
@@ -12,7 +13,7 @@ const BandLandingPage = () => {
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data-lp'],
     () => handleGetBand(id || '').then(res => { return res }));
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
 
   if (error) return <p>Ocorreu um erro:</p>;
 

@@ -6,6 +6,7 @@ import Feed from '../../components/Feed';
 import { useAuth } from "../../hook/AuthContext";
 import { useQuery } from "react-query";
 import { handleGetAllPosts } from "../../services/posts";
+import Loading from "../../components/Loading";
 
 const Home = () => {
   const { user } = useAuth();
@@ -14,7 +15,7 @@ const Home = () => {
       return res
     }));
     
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
 
   if (error) return <p>Ocorreu um erro:</p>;
 

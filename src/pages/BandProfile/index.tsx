@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import { handleGetBand } from "../../services/band";
 import { useAuth } from "../../hook/AuthContext";
 import { AiOutlineWhatsApp } from "react-icons/ai";
+import Loading from "../../components/Loading";
 
 
 
@@ -16,7 +17,7 @@ const BandProfile = () => {
   const { isLoading, error, data: band } = useQuery(['gigmaker-band-data'],
     () => handleGetBand(id || '').then(res => { return res }));
   const { user } = useAuth();
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
 
   if (error) return <p>Ocorreu um erro:</p>;
 

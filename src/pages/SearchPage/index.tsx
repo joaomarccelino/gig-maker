@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import SearchResultCard from "../../components/SearchResultCard";
 import './style.css';
 import { useAuth } from "../../hook/AuthContext";
+import Loading from "../../components/Loading";
 
 const SearchPage = () => {
   const { searchTerm } = useParams();
@@ -39,7 +40,7 @@ const SearchPage = () => {
     filteredResults && setSearchResults(filteredResults)
   }, [searchWord, searchData])
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <Loading />
 
   if (error) return <p>Ocorreu um erro:</p>;
 
